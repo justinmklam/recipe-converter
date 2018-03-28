@@ -1,3 +1,3 @@
 Flask
 gunicorn
-win32clipboard
+pywin32
