@@ -40,15 +40,20 @@ class RecipeConverter:
         return ingredient
 
     def convert_ingredient(self, line, unit, conversion):
-        # Extract number from measurement
-        number_string = line.split(unit)[0].replace(' ','')
-        number_float = float(number_string)
+        try:
+            # Extract number from measurement
+            number_string = line.split(unit)[0].replace(' ','')
+            number_float = float(number_string)
 
-        # Convert butter cup to grams
-        converted = number_float * float(conversion)
+            # Convert butter cup to grams
+            converted = number_float * float(conversion)
 
-        # Construct the output ingredient line with original line
-        line_out = '%.1f g%s'%(converted, line.split(unit)[1].strip('s'))
+            # Construct the output ingredient line with original line
+            line_out = '%.1f g%s'%(converted, line.split(unit)[1].strip('s'))
+        except:
+            # Return the original line if any error occurred)
+            line_out = line
+
         return line_out
 
     def parse_recipe(self, text):
