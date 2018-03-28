@@ -1,0 +1,11 @@
+ 
+textarea {
+    width:  100%;      /* calc and viewport to the rescue */
+    /* height: calc(100vh - 20px); */
+    height: 200px;
+    resize: vertical;
+}
+
+.h2, h2 {
+      margin-bottom: 15px;
+}

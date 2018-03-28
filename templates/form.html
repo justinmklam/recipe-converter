@@ -1,38 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <link rel="stylesheet" href ="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
 <body>
-    <div>
-        <h1>Recipe Converter</h1>
-        <p>Tired of reading recipes in cups, tablespoons, and teaspoons when you just want everything in grams? Paste your recipe in volumetric units in the textbox below, and hit "Convert"!</p>
-    </div>
-
-    <div>
-        <h2>Input Recipe</h2>
-        <form action="" id="textform" method="post">
-            <textarea name="text" style="width:400px; height:150px;">{{textarea}}</textarea>
-            <br>
-            <input type="submit" name="submit" value="Clear">
-            <input type="submit" name="submit" value="Paste From Clipboard">
-            <input type="submit" name="submit" value="Convert">
-        </form>
-    </div>
-
-    <div>
-        <h2>Output Recipe</h2>
-        {% with messages = get_flashed_messages() %} 
-            {% if messages %}
-                <!-- <ul class=flashes>
-                    {% for message in messages %}
-                    <li>{{ message }}</li>
-                    {% endfor %}
-                </ul> -->
-                {% for message in messages %}
-                    {{ message }}
+    <div class="container">
+        <div class="page-header">
+            <h1>Recipe Converter</h1>
+            <p class="lead">Tired of reading recipes in cups, tablespoons, and teaspoons when you just want everything in grams? Paste your recipe in volumetric units in the textbox below, and hit "Convert"!</p>
+        </div>
+    
+        <div class="col-md-6">
+            <h2>Input Recipe</h2>
+            <p>
+                <form action="" id="textform" method="post">
+                    <textarea name="text">{{textarea}}</textarea>
                     <br>
-                {% endfor %}
-            {% endif %} 
-        {% endwith %}
+                    <input type="submit" name="submit" value="Clear">
+                    <input type="submit" name="submit" value="Paste From Clipboard">
+                    <input type="submit" name="submit" value="Convert">
+                </form>
+            </p>
+        </div>
+            
+        <div class="col-md-6">
+            <h2>Output Recipe</h2>
+            <p>
+                {% with messages = get_flashed_messages() %} 
+                    {% if messages %}
+                        <!-- <ul class=flashes>
+                            {% for message in messages %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul> -->
+                        {% for message in messages %}
+                            {{ message }}
+                            <br>
+                        {% endfor %}
+                    {% endif %} 
+                {% endwith %}
+            </p>
+        </div>
+
     </div>
 
 </body>
+
 </html>
