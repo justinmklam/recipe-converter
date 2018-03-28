@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, flash
 import recipeConverter as rc
-import win32clipboard
+# import win32clipboard
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -31,23 +31,23 @@ def hello():
             # for line in text_converted:
             #     flash(line)
 
-        elif request.form['submit'] == 'Paste From Clipboard':
-            input_text = get_clipboard_data()
+        # elif request.form['submit'] == 'Paste From Clipboard':
+        #     input_text = get_clipboard_data()
 
-            parse_form_text(input_text)
+        #     parse_form_text(input_text)
 
         elif request.form['submit'] == 'Clear':
             input_text = ''
 
     return render_template('form.html', textarea=input_text)
 
-def get_clipboard_data():
-    # get clipboard data
-    win32clipboard.OpenClipboard()
-    data = win32clipboard.GetClipboardData(win32clipboard.CF_UNICODETEXT)
-    win32clipboard.CloseClipboard()
+# def get_clipboard_data():
+#     # get clipboard data
+#     win32clipboard.OpenClipboard()
+#     data = win32clipboard.GetClipboardData(win32clipboard.CF_UNICODETEXT)
+#     win32clipboard.CloseClipboard()
     
-    return data
+#     return data
 
 def parse_form_text(text):
     recipe = rc.RecipeConverter()
