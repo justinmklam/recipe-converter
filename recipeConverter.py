@@ -1,4 +1,4 @@
-import win32clipboard
+# import win32clipboard
 import unicodedata
 import csv
 
