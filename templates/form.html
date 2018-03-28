@@ -3,7 +3,7 @@
 <body>
     <div>
         <h1>Recipe Converter</h1>
-        <p>Volumetric to weight ingredient conversion.</p>
+        <p>Tired of reading recipes in cups, tablespoons, and teaspoons when you just want everything in grams? Paste your recipe in volumetric units in the textbox below, and hit "Convert"!</p>
     </div>
 
     <div>
@@ -11,7 +11,9 @@
         <form action="" id="textform" method="post">
             <textarea name="text" style="width:400px; height:150px;">{{textarea}}</textarea>
             <br>
-            <input type="submit" value="Submit">
+            <input type="submit" name="submit" value="Clear">
+            <input type="submit" name="submit" value="Paste From Clipboard">
+            <input type="submit" name="submit" value="Convert">
         </form>
     </div>
 
