@@ -44,8 +44,6 @@ def parse_form_text(text, multiplier):
 
     text_converted = recipe.parse_recipe(text2, multiplier)
 
-    # input_text = text
-
     for line in text_converted:
         flash(line)
 

@@ -1,11 +1,36 @@
- 
-textarea {
-    width:  100%;      /* calc and viewport to the rescue */
+
+#input-recipe {
     /* height: calc(100vh - 20px); */
-    height: 200px;
+    width:  100%;      /* calc and viewport to the rescue */
     resize: vertical;
+    height: 200px;
+}
+
+#output-recipe {
+    width:  100%;      /* calc and viewport to the rescue */
+    min-height: 258px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 0px;
 }
 
 .h2, h2 {
       margin-bottom: 15px;
+}
+
+h1, h2 {
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.page-header h1 {
+    text-align: center;
+}
+
+.page-header {
+    margin-bottom: 10px;
 }

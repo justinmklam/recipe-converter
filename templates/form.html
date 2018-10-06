@@ -7,14 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href ="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
 
 <body>
     <div class="container">
         <div class="page-header">
-            <h1>Recipe Converter</h1>
+            <h1>Metric Recipe Converter</h1>
             <p class="lead">Tired of reading recipes in cups, tablespoons, and teaspoons when you just want everything in grams? Paste your recipe in volumetric units in the textbox below, and hit "Convert"!</p>
         </div>
     
@@ -22,26 +21,25 @@
             <h2>Input Recipe</h2>
             <p>
                 <form action="" id="textform" method="post">
-                    Recipe Multiplier: <input type="text" name="multiplier" value={{multiplier}}><br><br>
-                    <textarea name="text">{{textarea}}</textarea>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Recipe Multiplier:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="multiplier" value={{multiplier}} placeholder="How many of this recipe do you want?">
+                        </div>
+                    </div>
+                    <textarea name="text" class="form-control" id="input-recipe">{{textarea}}</textarea>
                     <br>
-                    <input type="submit" name="submit" value="Clear">
-                    <!-- <input type="submit" name="submit" value="Paste From Clipboard"> -->
-                    <input type="submit" name="submit" value="Convert">
+                    <button type="submit" name="submit" class="btn btn-primary" value="Convert">Convert</button>
+                    <button type="submit" name="submit" class="btn btn-secondary" value="Clear">Clear</button>
                 </form>
             </p>
         </div>
             
         <div class="col-md-6">
             <h2>Output Recipe</h2>
-            <p>
+            <p id="output-recipe">
                 {% with messages = get_flashed_messages() %} 
                     {% if messages %}
-                        <!-- <ul class=flashes>
-                            {% for message in messages %}
-                            <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul> -->
                         {% for message in messages %}
                             {{ message }}
                             <br>
@@ -49,6 +47,9 @@
                     {% endif %} 
                 {% endwith %}
             </p>
+
+            <br>
+
         </div>
 
     </div>
@@ -58,8 +59,36 @@
 <footer>
     <div class="container">
         <hr>
-        <p class="text-center"><i>Find out more at <a href="http://justinmklam.com/blog/">justinmklam.com</a>!</i></p>
+        <p class="text-center"><i>
+            Check out this project on <a href="https://github.com/justinmklam/recipe-converter">GitHub</a>, or 
+            read about my other projects at <a href="http://justinmklam.com/blog/">justinmklam.com</a>!
+        </i>
+        </p>
     </div>
 </footer>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    $.fn.OneClickSelect = function(){
+      return $(this).on('click',function(){
+        
+         var range, selection;
+         if (window.getSelection) {
+            selection = window.getSelection();        
+            range = document.createRange();
+            range.selectNodeContents(this);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        } else if (document.body.createTextRange) {
+            range = document.body.createTextRange();
+            range.moveToElementText(this);
+            range.select();
+        }
+      });
+    };
+    // Apply to these elements
+    $('p, #output-recipe').OneClickSelect();
+
+</script>
 
 </html>
