@@ -49,14 +49,14 @@ class RecipeConverter:
             converted = number_float * float(conversion)
 
             # Construct the output ingredient line with original line
-            line_out = '%.1f g%s'%(converted, line.split(unit)[1].strip('s'))
+            line_out = '%g g%s'%(converted, line.split(unit)[1].strip('s'))
         except:
             # Return the original line if any error occurred)
             line_out = line
 
         return line_out
 
-    def parse_recipe(self, text):
+    def parse_recipe(self, text, multiplier):
         output = []
 
         for recipe_line in text:
@@ -71,20 +71,29 @@ class RecipeConverter:
                     line = self.parse_line(recipe_line)
 
                     if 'cup' in line:
-                        output.append(self.convert_ingredient(line, 'cup', ingredient_gram[1]))
+                        output.append(self.convert_ingredient(line, 'cup', float(ingredient_gram[1])*multiplier))
                         break
                     elif 'tablespoon' in line:
-                        output.append(self.convert_ingredient(line, 'tablespoon', ingredient_gram[2]))
+                        output.append(self.convert_ingredient(line, 'tablespoon', float(ingredient_gram[2])*multiplier))
                         break
                     elif 'teaspoon' in line:
-                        output.append(self.convert_ingredient(line, 'teaspoon', ingredient_gram[3]))
+                        output.append(self.convert_ingredient(line, 'teaspoon', float(ingredient_gram[3])*multiplier))
                         break
                     else:
                         flag_converted = False
 
             # If nothing was found, then use original line
             if not flag_converted:
-                output.append(recipe_line)
+
+                # Scale any numbers in the recipe line
+                recipe_line_multiplied = []
+                for word in recipe_line.split():
+                    if word.isdigit():
+                        recipe_line_multiplied.append('%g'%(float(word)*multiplier))
+                    else:
+                        recipe_line_multiplied.append(word)
+
+                output.append(" ".join(recipe_line_multiplied))
 
         return output
 

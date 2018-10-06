@@ -17,25 +17,32 @@ def hello():
 1⁄2 teaspoon salt
 1⁄2 teaspoon vanilla (optional)"""
 
+    multiplier = 1.0
+
     if request.method == 'POST':
         if request.form['submit'] == 'Convert':
             # store the given text in a variable
             input_text = request.form.get("text")
 
-            parse_form_text(input_text)
+            # recipe multiplier
+            try:
+                multiplier = float(request.form.get("multiplier"))
+            except ValueError:
+                multiplier = 1.0
+            parse_form_text(input_text, multiplier)
 
         elif request.form['submit'] == 'Clear':
             input_text = ''
 
-    return render_template('form.html', textarea=input_text)
+    return render_template('form.html', textarea=input_text, multiplier=multiplier)
 
-def parse_form_text(text):
+def parse_form_text(text, multiplier):
     recipe = rc.RecipeConverter()
 
     # split the text to get each line in a list
     text2 = text.split('\n')
 
-    text_converted = recipe.parse_recipe(text2)
+    text_converted = recipe.parse_recipe(text2, multiplier)
 
     # input_text = text
 
@@ -43,4 +50,4 @@ def parse_form_text(text):
         flash(line)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
