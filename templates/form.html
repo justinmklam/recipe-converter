@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href ="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i|Roboto+Slab" rel="stylesheet">
 
 <body>
     <div class="container">
@@ -27,7 +27,7 @@
                             <input type="text" class="form-control" name="multiplier" value={{multiplier}} placeholder="How many of this recipe do you want?">
                         </div>
                     </div>
-                    <textarea name="text" class="form-control" id="input-recipe">{{textarea}}</textarea>
+                    <textarea name="text" class="form-control" id="input-recipe" placeholder="Ingredient list goes here!">{{textarea}}</textarea>
                     <br>
                     <button type="submit" name="submit" class="btn btn-primary" value="Convert">Convert</button>
                     <button type="submit" name="submit" class="btn btn-secondary" value="Clear">Clear</button>
