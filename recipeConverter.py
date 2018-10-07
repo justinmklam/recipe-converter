@@ -88,9 +88,10 @@ class RecipeConverter:
                 # Scale any numbers in the recipe line
                 recipe_line_multiplied = []
                 for word in recipe_line.split():
-                    if word.isdigit():
+                    try:
                         recipe_line_multiplied.append('%g'%(float(word)*multiplier))
-                    else:
+                    # Will fail on float(word) if it's not a number
+                    except ValueError:
                         recipe_line_multiplied.append(word)
 
                 output.append(" ".join(recipe_line_multiplied))
