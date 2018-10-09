@@ -67,19 +67,22 @@ class RecipeConverter:
                 if ingredient_gram[0] in recipe_line:
                     flag_converted = True
 
-                    # Convert fractions to floats and remove abbreviations
-                    line = self.parse_line(recipe_line)
+                    try:
+                        # Convert fractions to floats and remove abbreviations
+                        line = self.parse_line(recipe_line)
 
-                    if 'cup' in line:
-                        output.append(self.convert_ingredient(line, 'cup', float(ingredient_gram[1])*multiplier))
-                        break
-                    elif 'tablespoon' in line:
-                        output.append(self.convert_ingredient(line, 'tablespoon', float(ingredient_gram[2])*multiplier))
-                        break
-                    elif 'teaspoon' in line:
-                        output.append(self.convert_ingredient(line, 'teaspoon', float(ingredient_gram[3])*multiplier))
-                        break
-                    else:
+                        if 'cup' in line:
+                            output.append(self.convert_ingredient(line, 'cup', float(ingredient_gram[1])*multiplier))
+                            break
+                        elif 'tablespoon' in line:
+                            output.append(self.convert_ingredient(line, 'tablespoon', float(ingredient_gram[2])*multiplier))
+                            break
+                        elif 'teaspoon' in line:
+                            output.append(self.convert_ingredient(line, 'teaspoon', float(ingredient_gram[3])*multiplier))
+                            break
+                        else:
+                            flag_converted = False
+                    except ValueError:
                         flag_converted = False
 
             # If nothing was found, then use original line
