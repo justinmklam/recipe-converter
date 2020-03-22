@@ -39,7 +39,7 @@ def hello():
 def parse_form_text(text, multiplier):
     recipe = rc.RecipeConverter()
 
-    text_converted = recipe.convert_recipe(text)
+    text_converted = recipe.convert_recipe(text, multiplier)
 
     for line in text_converted.split("\n"):
         flash(line)

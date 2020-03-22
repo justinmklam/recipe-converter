@@ -41,18 +41,19 @@ class RecipeConverter:
     def __init__(self):
         self._conversion_table = import_conversions(self.CONVERSION_TABLE_CSV)
 
-    def convert_recipe(self, recipe: str) -> str:
+    def convert_recipe(self, recipe: str, multiplier=1.0) -> str:
         """Convert a multi-line recipe from volumetric units to mass units
 
         Args:
             recipe (str): Input recipe
+            multiplier (float, optional): Scale factor to multiply recipe by
 
         Returns:
             str: Output recipe
         """
         output = ""
         for line in recipe.split("\n"):
-            output += self.convert_volume_to_mass(line) + "\n"
+            output += self.convert_volume_to_mass(line, multiplier) + "\n"
 
         return output.strip()
 
@@ -79,11 +80,12 @@ class RecipeConverter:
 
         return conversion
 
-    def convert_volume_to_mass(self, line: str) -> str:
+    def convert_volume_to_mass(self, line: str, multiplier=1.0) -> str:
         """Convert ingredient line from volume to mass
 
         Args:
             line (str): ie. "1 cup flour"
+            multiplier (float, optional): Scale factor to multiply ingredient by
 
         Returns:
             str: Converted line, ie. "120.0 g flour
@@ -92,7 +94,9 @@ class RecipeConverter:
 
         amount = utils.fraction_to_float(amount)
 
-        amount_converted = amount * self.get_ingredient_conversion(ingredient, unit)
+        amount_converted = (
+            amount * self.get_ingredient_conversion(ingredient, unit) * multiplier
+        )
 
         # Incompatible ingredients won't have an associated unit
         if unit:
