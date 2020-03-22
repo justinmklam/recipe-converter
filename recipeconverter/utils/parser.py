@@ -1,6 +1,10 @@
 from fractions import Fraction
 
 
+def convert_ingredient_volume_to_mass(line: str) -> str:
+    return "foo"
+
+
 def fraction_to_float(fraction: str) -> float:
     """Convert string representation of a fraction to float
 
