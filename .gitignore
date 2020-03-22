@@ -1,5 +1,13 @@
+**/__pycache/
 *.pyc
+*.egg-info/
+**/.ipynb_checkpoints/
 
-__pycache__/
-.ipynb_checkpoints/
 .vscode/
+
+# Sphinx docs
+docs/_build/
+docs/_source/
+
+# Virtual environment
+env/
