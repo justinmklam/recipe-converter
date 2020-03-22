@@ -1,8 +1,9 @@
-from fractions import Fraction
-import os
 import csv
+import os
 import re
-import unicodedata
+
+from recipeconverter import utils
+
 
 CONVERSION_TABLE_CSV = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), "gram-conversions.csv"
@@ -16,14 +17,6 @@ def import_conversions() -> list:
         list: List of dicts (ingredient, cup, tablespoon, teaspoon)
     """
 
-    def string_to_float(input: str) -> float:
-        try:
-            output = float(input)
-        except ValueError:
-            output = None
-
-        return output
-
     with open(CONVERSION_TABLE_CSV) as csvfile:
         conversion_table = list(csv.reader(csvfile, delimiter=","))
 
@@ -36,9 +29,9 @@ def import_conversions() -> list:
     for line in conversion_table:
         d = {
             header[0]: line[0],
-            header[1]: string_to_float(line[1]),
-            header[2]: string_to_float(line[2]),
-            header[3]: string_to_float(line[3]),
+            header[1]: utils.string_to_float(line[1]),
+            header[2]: utils.string_to_float(line[2]),
+            header[3]: utils.string_to_float(line[3]),
         }
         out_table.append(d)
 
@@ -90,7 +83,7 @@ def convert_ingredient_volume_to_mass(line: str) -> str:
 
     amount, unit, ingredient = parse_line(line.lower())
 
-    amount = fraction_to_float(amount)
+    amount = utils.fraction_to_float(amount)
 
     amount_converted = amount * get_ingredient_conversion(ingredient, unit)
 
@@ -138,27 +131,3 @@ def parse_line(line: str) -> tuple:
         ingredient = m[0][1].strip()
 
     return amount, unit, ingredient
-
-
-def fraction_to_float(fraction: str) -> float:
-    """Convert string representation of a fraction to float.
-
-    Also supports unicode characters.
-
-    Args:
-        fraction (str): String representation of fraction, ie. "3/4", "1 1/2", etc.
-
-    Returns:
-        float: Converted fraction
-    """
-    # For fractions with weird divider character (ie. "1⁄2")
-    fraction = fraction.replace("⁄", "/")
-
-    try:
-        # Convert unicode fractions (ie. "½")
-        fraction_out = unicodedata.numeric(fraction)
-    except TypeError:
-        # Convert normal fraction (ie. "1/2")
-        fraction_out = float(sum(Fraction(s) for s in fraction.split()))
-
-    return fraction_out

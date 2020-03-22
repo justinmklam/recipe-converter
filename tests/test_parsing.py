@@ -61,12 +61,3 @@ def test_convert_recipe():
 2.5 g salt"""
 
     assert recipe_out == expected_recipe_out
-
-
-def test_fraction_to_float():
-    assert rc.fraction_to_float("1/2") == 0.5
-    assert rc.fraction_to_float("½") == 0.5
-    assert rc.fraction_to_float("1⁄4") == 0.25
-    assert rc.fraction_to_float("3⁄4") == 0.75
-    assert rc.fraction_to_float("1 1/4") == 1.25
-    assert rc.fraction_to_float("2") == 2
