@@ -12,6 +12,8 @@ def test_parse_ingredient_line():
         ["1", "cup", "flour"],
         ["1/2", "cup", "flour"],
         ["1 1/2", "cup", "flour"],
+        ["1 1/2", "cup", "brown sugar"],
+        ["1 1/2", "cup", "whole wheat flour"],
     ]
 
     for line in lines:

@@ -7,11 +7,16 @@ def convert_ingredient_volume_to_mass(line: str) -> str:
 def parse_line(line:str) -> tuple:
     p = re.compile(r"(.+?)(?=[a-zA-z])([a-zA-Z]\w+)")
     m = p.findall(line)
-    print(m)
 
     amount = m[0][0].strip()
     unit = m[0][1].strip()
-    ingredient = m[1][1].strip()
+
+    # Use all remaining matches as ingredients (ie. "whole wheat flour")
+    ingredient = ""
+    for match in m[1:]:
+        ingredient += "%s " % match[-1]
+
+    ingredient = ingredient.strip()
 
     return amount, unit, ingredient
 
