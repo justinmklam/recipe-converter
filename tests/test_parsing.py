@@ -2,9 +2,8 @@ import pytest
 import recipeconverter.utils.parser as parser
 
 
-@pytest.mark.skip(reason="No way of currently testing this")
 def test_convert_ingredient_line():
-    assert parser.convert_ingredient_volume_to_mass("1 cup flour") == "120 g flour"
+    assert parser.convert_ingredient_volume_to_mass("1 cup flour") == "120.0 g flour"
 
 
 def test_parse_ingredient_line():

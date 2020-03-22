@@ -3,7 +3,14 @@ import re
 import unicodedata
 
 def convert_ingredient_volume_to_mass(line: str) -> str:
-    return "foo"
+    amount, unit, ingredient = parse_line(line)
+
+    amount = fraction_to_float(amount)
+
+    # Convert 1 cup flour to grams
+    amount_converted = amount * 120
+
+    return f"{amount_converted:.1f} g {ingredient}"
 
 def parse_line(line:str) -> tuple:
     p = re.compile(r"(.+?)(?=[a-zA-z])([a-zA-Z]\w+)")
