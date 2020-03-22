@@ -34,6 +34,19 @@ def test_parse_ingredient_line():
         assert ingredient == line[2]
 
 
+def test_parse_incompatible_ingredient_line():
+    lines = [
+        ["1", "banana, finely crushed"],
+        ["1", "figs (optional)"],
+    ]
+
+    for line in lines:
+        amount, unit, ingredient = parser.parse_line(" ".join(line))
+        assert amount == line[0]
+        assert unit == ""
+        assert ingredient == line[1]
+
+
 def test_fraction_to_float():
     assert parser.fraction_to_float("1/2") == 0.5
     assert parser.fraction_to_float("½") == 0.5
