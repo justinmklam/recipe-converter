@@ -39,6 +39,14 @@ def import_conversions() -> list:
 
 
 def convert_recipe(recipe: str) -> str:
+    """Convert a multi-line recipe from volumetric units to mass units
+
+    Args:
+        recipe (str): Input recipe
+
+    Returns:
+        str: Output recipe
+    """
     output = ""
     for line in recipe.split("\n"):
         output += convert_ingredient_volume_to_mass(line) + "\n"
