@@ -1,5 +1,6 @@
 from fractions import Fraction
 import re
+import unicodedata
 
 def convert_ingredient_volume_to_mass(line: str) -> str:
     return "foo"
@@ -21,7 +22,9 @@ def parse_line(line:str) -> tuple:
     return amount, unit, ingredient
 
 def fraction_to_float(fraction: str) -> float:
-    """Convert string representation of a fraction to float
+    """Convert string representation of a fraction to float.
+
+    Also supports unicode characters.
 
     Args:
         fraction (str): String representation of fraction, ie. "3/4", "1 1/2", etc.
@@ -29,5 +32,14 @@ def fraction_to_float(fraction: str) -> float:
     Returns:
         float: Converted fraction
     """
-    return float(sum(Fraction(s) for s in fraction.split()))
+    # For fractions with weird divider character (ie. "1⁄2")
+    fraction = fraction.replace("⁄", "/")
 
+    try:
+        # Convert unicode fractions (ie. "½")
+        fraction_out = unicodedata.numeric(fraction)
+    except TypeError:
+        # Convert normal fraction (ie. "1/2")
+        fraction_out = float(sum(Fraction(s) for s in fraction.split()))
+
+    return fraction_out
