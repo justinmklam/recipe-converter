@@ -8,10 +8,17 @@ def test_convert_ingredient_line():
 
 
 def test_parse_ingredient_line():
-    amount, unit, ingredient = parser.parse_line("1 cup flour")
-    assert amount == "1"
-    assert unit == "cup"
-    assert ingredient == "flour"
+    lines = [
+        ["1", "cup", "flour"],
+        ["1/2", "cup", "flour"],
+        ["1 1/2", "cup", "flour"],
+    ]
+
+    for line in lines:
+        amount, unit, ingredient = parser.parse_line(" ".join(line))
+        assert amount == line[0]
+        assert unit == line[1]
+        assert ingredient == line[2]
 
 def test_fraction_to_float():
     assert parser.fraction_to_float("1/2") == 0.5
