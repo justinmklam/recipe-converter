@@ -97,19 +97,31 @@ def parse_line(line: str) -> tuple:
 
     Returns:
         tuple (str): Amount (ie. "1 1/2")
-        tuple (str): Unit (ie. "cup")
+        tuple (str): Unit (ie. "cup"), or "" if no units (ie. "1 banana")
         tuple (str): Ingredient (ie. "brown sugar")
     """
+    compatible_units = ["cup", "tablespoon", "teaspoon"]
+    regex_compatible = r"(.+?)(cup|tablespoon|teaspoon)(.*)"
+    regex_incompatible = r"(.+?)(?=[a-zA-z])(.*)"
 
     line = line.replace("tbsp", "tablespoon")
     line = line.replace("tsp", "teaspoon")
 
-    p = re.compile(r"(.+?)(cup|tablespoon|teaspoon)(.*)")
-    m = p.findall(line)
+    if any(x in line for x in compatible_units):
+        p = re.compile(regex_compatible)
+        m = p.findall(line)
 
-    amount = m[0][0].strip()
-    unit = m[0][1].strip()
-    ingredient = m[0][2].strip()
+        amount = m[0][0].strip()
+        unit = m[0][1].strip()
+        ingredient = m[0][2].strip()
+
+    else:
+        p = re.compile(regex_incompatible)
+        m = p.findall(line)
+
+        amount = m[0][0].strip()
+        unit = ""
+        ingredient = m[0][1].strip()
 
     return amount, unit, ingredient
 
