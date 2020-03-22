@@ -4,6 +4,9 @@ import recipeconverter.utils.parser as parser
 
 def test_convert_ingredient_line():
     assert parser.convert_ingredient_volume_to_mass("1 cup flour") == "120.0 g flour"
+    assert parser.convert_ingredient_volume_to_mass("1 cup sugar") == "201.0 g sugar"
+    assert parser.convert_ingredient_volume_to_mass("1 tablespoon sugar") == "12.5 g sugar"
+    assert parser.convert_ingredient_volume_to_mass("1 teaspoon sugar") == "4.2 g sugar"
 
 
 def test_parse_ingredient_line():

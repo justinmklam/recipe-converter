@@ -1,14 +1,90 @@
 from fractions import Fraction
+import os
+import csv
 import re
 import unicodedata
 
+CONVERSION_TABLE_CSV = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    "..",
+    "gram-conversions.csv"
+)
+
+
+def import_conversions() -> list:
+    """Import ingredient conversion table
+
+    Returns:
+        list: List of dicts (ingredient, cup, tablespoon, teaspoon)
+    """
+    def string_to_float(input: str) -> float:
+        try:
+            output = float(input)
+        except ValueError:
+            output = None
+
+        return output
+
+    with open(CONVERSION_TABLE_CSV) as csvfile:
+        conversion_table = list(csv.reader(csvfile, delimiter=','))
+
+    # Remove header
+    header = conversion_table[0]
+    conversion_table.pop(0)
+
+    # Convert list of lists to list of dicts
+    out_table = []
+    for line in conversion_table:
+        d = {
+            header[0]: line[0],
+            header[1]: string_to_float(line[1]),
+            header[2]: string_to_float(line[2]),
+            header[3]: string_to_float(line[3]),
+        }
+        out_table.append(d)
+
+    return out_table
+
+
 def convert_ingredient_volume_to_mass(line: str) -> str:
+    """Convert ingredient line from volume to mass
+
+    Args:
+        line (str): ie. "1 cup flour"
+
+    Returns:
+        str: Converted line, ie. "120.0 g flour
+    """
+    def get_ingredient_conversion(ingredient: str, unit: str) -> float:
+        """Get conversion factor for the given ingredient
+
+        Args:
+            ingredient (str): ie. Flour, sugar, etc.
+            unit (str): Cup, tablespoon, or teaspoon
+
+        Returns:
+            float: Conversion factor from unit to grams
+        """
+        conversion_table = import_conversions()
+
+        ingredient_found = False
+
+        for conversion_line in conversion_table:
+            if conversion_line["ingredient"] in ingredient:
+                conversion = conversion_line[unit]
+                ingredient_found = True
+                break
+
+        if not ingredient_found:
+            conversion = 1
+
+        return conversion
+
     amount, unit, ingredient = parse_line(line)
 
     amount = fraction_to_float(amount)
 
-    # Convert 1 cup flour to grams
-    amount_converted = amount * 120
+    amount_converted = amount * get_ingredient_conversion(ingredient, unit)
 
     return f"{amount_converted:.1f} g {ingredient}"
 
