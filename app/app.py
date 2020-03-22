@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, flash
-import recipeConverter as rc
+import recipeconverter as rc
 # import win32clipboard
 
 app = Flask(__name__)
@@ -39,12 +39,9 @@ def hello():
 def parse_form_text(text, multiplier):
     recipe = rc.RecipeConverter()
 
-    # split the text to get each line in a list
-    text2 = text.split('\n')
+    text_converted = recipe.convert_recipe(text)
 
-    text_converted = recipe.parse_recipe(text2, multiplier)
-
-    for line in text_converted:
+    for line in text_converted.split("\n"):
         flash(line)
 
 if __name__ == '__main__':
