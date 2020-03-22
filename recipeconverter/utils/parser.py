@@ -83,8 +83,6 @@ def convert_ingredient_volume_to_mass(line: str) -> str:
     amount, unit, ingredient = parse_line(line.lower())
 
     amount = fraction_to_float(amount)
-    unit = unit.replace("tbsp", "tablespoon")
-    unit = unit.replace("tsp", "teaspoon")
 
     amount_converted = amount * get_ingredient_conversion(ingredient, unit)
 
@@ -102,18 +100,16 @@ def parse_line(line: str) -> tuple:
         tuple (str): Unit (ie. "cup")
         tuple (str): Ingredient (ie. "brown sugar")
     """
-    p = re.compile(r"(.+?)(?=[a-zA-z])([a-zA-Z]\w+)")
+
+    line = line.replace("tbsp", "tablespoon")
+    line = line.replace("tsp", "teaspoon")
+
+    p = re.compile(r"(.+?)(cup|tablespoon|teaspoon)(.*)")
     m = p.findall(line)
 
     amount = m[0][0].strip()
     unit = m[0][1].strip()
-
-    # Use all remaining matches as ingredients (ie. "whole wheat flour")
-    ingredient = ""
-    for match in m[1:]:
-        ingredient += "%s " % match[-1]
-
-    ingredient = ingredient.strip()
+    ingredient = m[0][2].strip()
 
     return amount, unit, ingredient
 
