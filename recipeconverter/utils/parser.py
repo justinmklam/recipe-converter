@@ -80,7 +80,7 @@ def convert_ingredient_volume_to_mass(line: str) -> str:
 
         return conversion
 
-    amount, unit, ingredient = parse_line(line)
+    amount, unit, ingredient = parse_line(line.lower())
 
     amount = fraction_to_float(amount)
     unit = unit.replace("tbsp", "tablespoon")
