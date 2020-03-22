@@ -5,7 +5,7 @@ import re
 import unicodedata
 
 CONVERSION_TABLE_CSV = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "..", "gram-conversions.csv"
+    os.path.dirname(os.path.realpath(__file__)), "gram-conversions.csv"
 )
 
 

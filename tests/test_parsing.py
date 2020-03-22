@@ -1,17 +1,17 @@
 import pytest
-import recipeconverter.utils.parser as parser
+import recipeconverter as rc
 
 
 def test_convert_ingredient_line():
-    assert parser.convert_ingredient_volume_to_mass("1 cup flour") == "120.0 g flour"
-    assert parser.convert_ingredient_volume_to_mass("1 CUP FLOUR") == "120.0 g flour"
-    assert parser.convert_ingredient_volume_to_mass("1 cup sugar") == "201.0 g sugar"
+    assert rc.convert_ingredient_volume_to_mass("1 cup flour") == "120.0 g flour"
+    assert rc.convert_ingredient_volume_to_mass("1 CUP FLOUR") == "120.0 g flour"
+    assert rc.convert_ingredient_volume_to_mass("1 cup sugar") == "201.0 g sugar"
     assert (
-        parser.convert_ingredient_volume_to_mass("1 tablespoon sugar") == "12.5 g sugar"
+        rc.convert_ingredient_volume_to_mass("1 tablespoon sugar") == "12.5 g sugar"
     )
-    assert parser.convert_ingredient_volume_to_mass("1 teaspoon sugar") == "4.2 g sugar"
-    assert parser.convert_ingredient_volume_to_mass("1 tbsp sugar") == "12.5 g sugar"
-    assert parser.convert_ingredient_volume_to_mass("1 tsp sugar") == "4.2 g sugar"
+    assert rc.convert_ingredient_volume_to_mass("1 teaspoon sugar") == "4.2 g sugar"
+    assert rc.convert_ingredient_volume_to_mass("1 tbsp sugar") == "12.5 g sugar"
+    assert rc.convert_ingredient_volume_to_mass("1 tsp sugar") == "4.2 g sugar"
 
 
 def test_parse_ingredient_line():
@@ -28,7 +28,7 @@ def test_parse_ingredient_line():
     ]
 
     for line in lines:
-        amount, unit, ingredient = parser.parse_line(" ".join(line))
+        amount, unit, ingredient = rc.parse_line(" ".join(line))
         assert amount == line[0]
         assert unit == line[1]
         assert ingredient == line[2]
@@ -41,7 +41,7 @@ def test_parse_incompatible_ingredient_line():
     ]
 
     for line in lines:
-        amount, unit, ingredient = parser.parse_line(" ".join(line))
+        amount, unit, ingredient = rc.parse_line(" ".join(line))
         assert amount == line[0]
         assert unit == ""
         assert ingredient == line[1]
@@ -53,7 +53,7 @@ def test_convert_recipe():
 3 bananas
 1/2 teaspoon salt"""
 
-    recipe_out = parser.convert_recipe(recipe)
+    recipe_out = rc.convert_recipe(recipe)
 
     expected_recipe_out = """151.3 g butter
 201.0 g sugar
@@ -64,9 +64,9 @@ def test_convert_recipe():
 
 
 def test_fraction_to_float():
-    assert parser.fraction_to_float("1/2") == 0.5
-    assert parser.fraction_to_float("½") == 0.5
-    assert parser.fraction_to_float("1⁄4") == 0.25
-    assert parser.fraction_to_float("3⁄4") == 0.75
-    assert parser.fraction_to_float("1 1/4") == 1.25
-    assert parser.fraction_to_float("2") == 2
+    assert rc.fraction_to_float("1/2") == 0.5
+    assert rc.fraction_to_float("½") == 0.5
+    assert rc.fraction_to_float("1⁄4") == 0.25
+    assert rc.fraction_to_float("3⁄4") == 0.75
+    assert rc.fraction_to_float("1 1/4") == 1.25
+    assert rc.fraction_to_float("2") == 2
