@@ -5,9 +5,7 @@ import re
 import unicodedata
 
 CONVERSION_TABLE_CSV = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)),
-    "..",
-    "gram-conversions.csv"
+    os.path.dirname(os.path.realpath(__file__)), "..", "gram-conversions.csv"
 )
 
 
@@ -17,6 +15,7 @@ def import_conversions() -> list:
     Returns:
         list: List of dicts (ingredient, cup, tablespoon, teaspoon)
     """
+
     def string_to_float(input: str) -> float:
         try:
             output = float(input)
@@ -26,7 +25,7 @@ def import_conversions() -> list:
         return output
 
     with open(CONVERSION_TABLE_CSV) as csvfile:
-        conversion_table = list(csv.reader(csvfile, delimiter=','))
+        conversion_table = list(csv.reader(csvfile, delimiter=","))
 
     # Remove header
     header = conversion_table[0]
@@ -55,6 +54,7 @@ def convert_ingredient_volume_to_mass(line: str) -> str:
     Returns:
         str: Converted line, ie. "120.0 g flour
     """
+
     def get_ingredient_conversion(ingredient: str, unit: str) -> float:
         """Get conversion factor for the given ingredient
 
@@ -88,7 +88,8 @@ def convert_ingredient_volume_to_mass(line: str) -> str:
 
     return f"{amount_converted:.1f} g {ingredient}"
 
-def parse_line(line:str) -> tuple:
+
+def parse_line(line: str) -> tuple:
     p = re.compile(r"(.+?)(?=[a-zA-z])([a-zA-Z]\w+)")
     m = p.findall(line)
 
@@ -103,6 +104,7 @@ def parse_line(line:str) -> tuple:
     ingredient = ingredient.strip()
 
     return amount, unit, ingredient
+
 
 def fraction_to_float(fraction: str) -> float:
     """Convert string representation of a fraction to float.
