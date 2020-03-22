@@ -92,6 +92,16 @@ def convert_ingredient_volume_to_mass(line: str) -> str:
 
 
 def parse_line(line: str) -> tuple:
+    """Exract components from ingredient line
+
+    Args:
+        line (str): Input line, ie. "1 1/2 cup brown sugar"
+
+    Returns:
+        tuple (str): Amount (ie. "1 1/2")
+        tuple (str): Unit (ie. "cup")
+        tuple (str): Ingredient (ie. "brown sugar")
+    """
     p = re.compile(r"(.+?)(?=[a-zA-z])([a-zA-Z]\w+)")
     m = p.findall(line)
 
