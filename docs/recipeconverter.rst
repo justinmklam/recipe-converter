@@ -1,26 +1,18 @@
 Documentation
 ===================
 
-Main Scripts
----------------
+Recipe Converter
+------------------
 
-.. automodule:: recipeconverter.main
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Drivers
----------------
-
-.. automodule:: recipeconverter.drivers.sample_driver
+.. automodule:: recipeconverter
    :members:
    :undoc-members:
    :show-inheritance:
 
 Utilities
-----------------
+---------------
 
-.. automodule:: recipeconverter.utils.sample_util
+.. automodule:: recipeconverter.utils
    :members:
    :undoc-members:
    :show-inheritance:
