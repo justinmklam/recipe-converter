@@ -98,13 +98,18 @@ class RecipeConverter:
             amount * self.get_ingredient_conversion(ingredient, unit) * multiplier
         )
 
+        if amount_converted.is_integer():
+            amount_converted = int(amount_converted)
+        else:
+            amount_converted = round(amount_converted, 1)
+
         # Incompatible ingredients won't have an associated unit
         if unit:
             unit_out = " g "
         else:
             unit_out = " "
 
-        return f"{amount_converted:.1f}{unit_out}{ingredient}"
+        return f"{amount_converted}{unit_out}{ingredient}"
 
     @staticmethod
     def parse_line(line: str) -> tuple:
