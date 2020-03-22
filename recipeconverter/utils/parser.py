@@ -45,6 +45,14 @@ def import_conversions() -> list:
     return out_table
 
 
+def convert_recipe(recipe: str) -> str:
+    output = ""
+    for line in recipe.split("\n"):
+        output += convert_ingredient_volume_to_mass(line) + "\n"
+
+    return output.strip()
+
+
 def convert_ingredient_volume_to_mass(line: str) -> str:
     """Convert ingredient line from volume to mass
 
@@ -86,7 +94,13 @@ def convert_ingredient_volume_to_mass(line: str) -> str:
 
     amount_converted = amount * get_ingredient_conversion(ingredient, unit)
 
-    return f"{amount_converted:.1f} g {ingredient}"
+    # Incompatible ingredients won't have an associated unit
+    if unit:
+        unit_out = " g "
+    else:
+        unit_out = " "
+
+    return f"{amount_converted:.1f}{unit_out}{ingredient}"
 
 
 def parse_line(line: str) -> tuple:

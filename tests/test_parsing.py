@@ -47,6 +47,22 @@ def test_parse_incompatible_ingredient_line():
         assert ingredient == line[1]
 
 
+def test_convert_recipe():
+    recipe = """2/3 cup butter
+1 cup sugar
+3 bananas
+1/2 teaspoon salt"""
+
+    recipe_out = parser.convert_recipe(recipe)
+
+    expected_recipe_out = """151.3 g butter
+201.0 g sugar
+3.0 bananas
+2.5 g salt"""
+
+    assert recipe_out == expected_recipe_out
+
+
 def test_fraction_to_float():
     assert parser.fraction_to_float("1/2") == 0.5
     assert parser.fraction_to_float("½") == 0.5
