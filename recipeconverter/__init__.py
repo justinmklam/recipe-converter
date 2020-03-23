@@ -63,8 +63,9 @@ class RecipeConverter:
         for line in recipe.split("\n"):
             try:
                 output += self.convert_volume_to_mass(line, multiplier) + "\n"
-            except Exception:
+            except Exception as e:
                 print(f"Could not convert: '{line}''")
+                print(repr(e))
                 output += line + "\n"
 
         return output.strip()
