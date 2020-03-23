@@ -28,11 +28,8 @@ def convert():
 
     text = request.form["data"]
     multiplier = float(request.form["multiplier"])
-    print(text.strip())
 
-    text_converted = recipe.convert_recipe(text, multiplier)
-
-    return text_converted
+    return recipe.convert_recipe(text, multiplier)
 
 
 if __name__ == '__main__':
