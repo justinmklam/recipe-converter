@@ -143,7 +143,7 @@ class RecipeConverter:
             tuple (str): Ingredient (ie. "brown sugar")
         """
         compatible_units = ["cup", "tablespoon", "teaspoon", "ounce", "pound"]
-        regex_compatible = r"(.+?)(cup|tablespoon|teaspoon|ounce|pound)(.*)"
+        regex_compatible = r"(.+?)(cup|tablespoon|teaspoon|ounce|pound)(?:s|)(.*)"
         regex_incompatible = r"(.+?)(?=[a-zA-z])(.*)"
 
         line = line.replace("tbsp", "tablespoon")
