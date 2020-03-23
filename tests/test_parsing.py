@@ -16,6 +16,8 @@ def test_convert_ingredient_line(rc_handler):
     assert rc_handler.convert_volume_to_mass("1 teaspoon sugar") == "4.2 g sugar"
     assert rc_handler.convert_volume_to_mass("1 tbsp sugar") == "12.5 g sugar"
     assert rc_handler.convert_volume_to_mass("1 tsp sugar") == "4.2 g sugar"
+    assert rc_handler.convert_volume_to_mass("1 oz sugar") == "28.3 g sugar"
+    assert rc_handler.convert_volume_to_mass("1 lb flour") == "453.6 g flour"
 
 
 def test_parse_ingredient_line(rc_handler):

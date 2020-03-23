@@ -39,6 +39,9 @@ class RecipeConverter:
         os.path.dirname(os.path.realpath(__file__)), "gram-conversions.csv"
     )
 
+    OUNCE_TO_GRAM = 28.3495
+    POUND_TO_GRAM = 453.592
+
     def __init__(self):
         self._conversion_table = import_conversions(self.CONVERSION_TABLE_CSV)
 
@@ -86,7 +89,9 @@ class RecipeConverter:
         return conversion
 
     def convert_volume_to_mass(self, line: str, multiplier=1.0) -> str:
-        """Convert ingredient line from volume to mass
+        """Convert ingredient line from volume to mass.
+
+        Also converts imperial weight to metric (ie. ounce or pounds)
 
         Args:
             line (str): ie. "1 cup flour"
@@ -99,9 +104,14 @@ class RecipeConverter:
 
         amount = utils.fraction_to_float(amount)
 
-        amount_converted = (
-            amount * self.get_ingredient_conversion(ingredient, unit) * multiplier
-        )
+        if unit == "ounce":
+            conversion = self.OUNCE_TO_GRAM
+        elif unit == "pound":
+            conversion = self.POUND_TO_GRAM
+        else:
+            conversion = self.get_ingredient_conversion(ingredient, unit)
+
+        amount_converted = amount * conversion * multiplier
 
         if amount_converted.is_integer():
             amount_converted = int(amount_converted)
@@ -128,12 +138,15 @@ class RecipeConverter:
             tuple (str): Unit (ie. "cup"), or "" if no units (ie. "1 banana")
             tuple (str): Ingredient (ie. "brown sugar")
         """
-        compatible_units = ["cup", "tablespoon", "teaspoon"]
-        regex_compatible = r"(.+?)(cup|tablespoon|teaspoon)(.*)"
+        compatible_units = ["cup", "tablespoon", "teaspoon", "ounce", "pound"]
+        regex_compatible = r"(.+?)(cup|tablespoon|teaspoon|ounce|pound)(.*)"
         regex_incompatible = r"(.+?)(?=[a-zA-z])(.*)"
 
         line = line.replace("tbsp", "tablespoon")
         line = line.replace("tsp", "teaspoon")
+        line = line.replace("oz", "ounce")
+        line = line.replace("lbs", "pound")
+        line = line.replace("lb", "pound")
 
         if any(x in line for x in compatible_units):
             p = re.compile(regex_compatible)
