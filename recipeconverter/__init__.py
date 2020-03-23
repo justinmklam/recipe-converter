@@ -34,6 +34,10 @@ def import_conversions(filename) -> list:
 
 
 class RecipeConverter:
+    """Convert ingredients and recipes from volumetric to mass units. Includes
+    commonly used baking ingredients such as flour, sugar, etc.
+    """
+
     OUNCE_TO_GRAM = 28.3495
     POUND_TO_GRAM = 453.592
 
