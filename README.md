@@ -3,7 +3,7 @@ Web app to convert recipes from volumetric to weight measurements. Also includes
 
 **Link to live project:** [recipe-converter-app.herokuapp.com](http://recipe-converter-app.herokuapp.com/)
 
-![Web App Screencap](static/imgs/web-screencap.PNG)
+![Web App Screencap](docs/imgs/web-screencap.PNG)
 
 # Features
 
