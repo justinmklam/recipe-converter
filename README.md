@@ -1,6 +1,6 @@
 # Metric Recipe Converter
 
-[![Documentation Status](https://readthedocs.org/projects/recipe-converter/badge/?version=latest)](https://recipe-converter.readthedocs.io/en/latest/?badge=latest)
+![Python application](https://github.com/justinmklam/recipe-converter/workflows/Python%20application/badge.svg?branch=master) [![Documentation Status](https://readthedocs.org/projects/recipe-converter/badge/?version=latest)](https://recipe-converter.readthedocs.io/en/latest/?badge=latest)
 
 Web app to convert recipes from volumetric to weight measurements. Also includes a recipe multipler for scaling the ingredients up or down.
 
