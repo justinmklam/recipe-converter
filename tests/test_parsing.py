@@ -8,10 +8,10 @@ def rc_handler():
 
 
 def test_convert_ingredient_line(rc_handler):
-    assert rc_handler.convert_volume_to_mass("1 cup flour") == "120 g flour"
-    assert rc_handler.convert_volume_to_mass("1 cup flour", multiplier=2) == "240 g flour"
-    assert rc_handler.convert_volume_to_mass("1 CUP FLOUR") == "120 g flour"
-    assert rc_handler.convert_volume_to_mass("1 cup sugar") == "201 g sugar"
+    assert rc_handler.convert_volume_to_mass("1 cup flour") == "142 g flour"
+    assert rc_handler.convert_volume_to_mass("1 cup flour", multiplier=2) == "284 g flour"
+    assert rc_handler.convert_volume_to_mass("1 CUP FLOUR") == "142 g flour"
+    assert rc_handler.convert_volume_to_mass("1 cup sugar") == "198 g sugar"
     assert rc_handler.convert_volume_to_mass("1 tablespoon sugar") == "12.5 g sugar"
     assert rc_handler.convert_volume_to_mass("1 teaspoon sugar") == "4.2 g sugar"
     assert rc_handler.convert_volume_to_mass("1 tbsp sugar") == "12.5 g sugar"
@@ -60,7 +60,7 @@ def test_convert_recipe(rc_handler):
     recipe_out = rc_handler.convert_recipe(recipe)
 
     expected_recipe_out = """151.3 g butter
-201 g sugar
+198 g sugar
 3 bananas
 2.5 g salt"""
 

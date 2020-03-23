@@ -34,6 +34,7 @@ def import_conversions(filename) -> list:
 
 
 class RecipeConverter:
+    # Values from https://www.cooksillustrated.com/how_tos/5490-baking-conversion-chart
     CONVERSION_TABLE_CSV = os.path.join(
         os.path.dirname(os.path.realpath(__file__)), "gram-conversions.csv"
     )
