@@ -89,8 +89,11 @@ class RecipeConverter:
 
         if not ingredient_found:
             conversion = 1
+            unit_out = unit
+        else:
+            unit_out = "g"
 
-        return conversion
+        return conversion, unit_out
 
     def convert_volume_to_mass(self, line: str, multiplier=1.0) -> str:
         """Convert ingredient line from volume to mass.
@@ -110,10 +113,12 @@ class RecipeConverter:
 
         if unit == "ounce":
             conversion = self.OUNCE_TO_GRAM
+            unit = "g"
         elif unit == "pound":
             conversion = self.POUND_TO_GRAM
+            unit = "g"
         else:
-            conversion = self.get_ingredient_conversion(ingredient, unit)
+            conversion, unit = self.get_ingredient_conversion(ingredient, unit)
 
         amount_converted = amount * conversion * multiplier
 
@@ -124,7 +129,7 @@ class RecipeConverter:
 
         # Incompatible ingredients won't have an associated unit
         if unit:
-            unit_out = " g "
+            unit_out = f" {unit} "
         else:
             unit_out = " "
 
