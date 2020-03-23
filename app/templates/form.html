@@ -18,15 +18,26 @@
         </div>
 
         <div class="col-md-6">
-            <h2>Input Recipe</h2>
+            <h2>Input Recipe</h2>    input_text = """"""
+
+            multiplier = 1.0
             <p>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Recipe Multiplier:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input-multiplier" name="multiplier" value={{multiplier}} placeholder="How many of this recipe do you want?">
+                        <input type="text" class="form-control" id="input-multiplier" name="multiplier" value=1.0 placeholder="How many of this recipe do you want?">
                     </div>
                 </div>
-                <textarea name="text" class="form-control" id="input-recipe" placeholder="Ingredient list goes here!">{{textarea}}</textarea>
+                <textarea name="text" class="form-control" id="input-recipe" placeholder="Ingredient list goes here!">
+1⁄2 cup butter
+1 cup sugar
+2 eggs, beaten
+3 bananas, finely crushed (for serious and extreme moist and delicious, try 4 bananas)
+1 1⁄2 cups flour
+1 teaspoon baking soda
+1⁄2 teaspoon salt
+1⁄2 teaspoon vanilla (optional)
+                </textarea>
                 <br>
                 <button id="btn-convert" class="btn btn-primary" value="Convert">Convert</button>
                 <button id="btn-clear" class="btn btn-secondary" value="Clear">Clear</button>
