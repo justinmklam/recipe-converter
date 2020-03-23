@@ -19,30 +19,21 @@ def hello():
 
     multiplier = 1.0
 
-    if request.method == 'POST':
-        if request.form['submit'] == 'Convert':
-            # store the given text in a variable
-            input_text = request.form.get("text")
-
-            # recipe multiplier
-            try:
-                multiplier = float(request.form.get("multiplier"))
-            except ValueError:
-                multiplier = 1.0
-            parse_form_text(input_text, multiplier)
-
-        elif request.form['submit'] == 'Clear':
-            input_text = ''
-
     return render_template('form.html', textarea=input_text, multiplier=multiplier)
 
-def parse_form_text(text, multiplier):
+
+@app.route("/convert", methods=["POST"])
+def convert():
     recipe = rc.RecipeConverter()
+
+    text = request.form["data"]
+    multiplier = float(request.form["multiplier"])
+    print(text.strip())
 
     text_converted = recipe.convert_recipe(text, multiplier)
 
-    for line in text_converted.split("\n"):
-        flash(line)
+    return text_converted
+
 
 if __name__ == '__main__':
     app.run(debug=False)

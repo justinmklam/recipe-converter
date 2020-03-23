@@ -16,38 +16,26 @@
             <h1>Metric Recipe Converter</h1>
             <p class="lead">Tired of reading recipes in cups, tablespoons, and teaspoons when you just want everything in grams? Paste your recipe in volumetric units in the textbox below, and hit "Convert"!</p>
         </div>
-    
+
         <div class="col-md-6">
             <h2>Input Recipe</h2>
             <p>
-                <form action="" id="textform" method="post">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Recipe Multiplier:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="multiplier" value={{multiplier}} placeholder="How many of this recipe do you want?">
-                        </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Recipe Multiplier:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="input-multiplier" name="multiplier" value={{multiplier}} placeholder="How many of this recipe do you want?">
                     </div>
-                    <textarea name="text" class="form-control" id="input-recipe" placeholder="Ingredient list goes here!">{{textarea}}</textarea>
-                    <br>
-                    <button type="submit" name="submit" class="btn btn-primary" value="Convert">Convert</button>
-                    <button type="submit" name="submit" class="btn btn-secondary" value="Clear">Clear</button>
-                </form>
+                </div>
+                <textarea name="text" class="form-control" id="input-recipe" placeholder="Ingredient list goes here!">{{textarea}}</textarea>
+                <br>
+                <button id="btn-convert" class="btn btn-primary" value="Convert">Convert</button>
+                <button id="btn-clear" class="btn btn-secondary" value="Clear">Clear</button>
             </p>
         </div>
-            
+
         <div class="col-md-6">
             <h2>Output Recipe</h2>
-            <p id="output-recipe">
-                {% with messages = get_flashed_messages() %} 
-                    {% if messages %}
-                        {% for message in messages %}
-                            {{ message }}
-                            <br>
-                        {% endfor %}
-                    {% endif %} 
-                {% endwith %}
-            </p>
-
+            <textarea id="output-recipe" readonly></textarea>
             <br>
 
         </div>
@@ -60,7 +48,7 @@
     <div class="container">
         <hr>
         <p class="text-center"><i>
-            Check out this project on <a href="https://github.com/justinmklam/recipe-converter">GitHub</a>, or 
+            Check out this project on <a href="https://github.com/justinmklam/recipe-converter">GitHub</a>, or
             read about my other projects at <a href="http://justinmklam.com/blog/">justinmklam.com</a>!
         </i>
         </p>
@@ -69,25 +57,22 @@
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
-    $.fn.OneClickSelect = function(){
-      return $(this).on('click',function(){
-        
-         var range, selection;
-         if (window.getSelection) {
-            selection = window.getSelection();        
-            range = document.createRange();
-            range.selectNodeContents(this);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        } else if (document.body.createTextRange) {
-            range = document.body.createTextRange();
-            range.moveToElementText(this);
-            range.select();
-        }
-      });
-    };
-    // Apply to these elements
-    $('#output-recipe').OneClickSelect();
+    var btnConvert = $("#btn-convert")
+    var btnClear = $("#btn-clear")
+    var txtInputRecipe = $("#input-recipe")
+    var txtInputMultiplier = $("#input-multiplier")
+    var txtOutputRecipe = $("#output-recipe")
+
+    window.addEventListener("load", function () {
+        btnConvert.on("click", onConvertClicked);
+        btnClear.on("click", onClearClicked);
+    });
+
+    function onConvertClicked() {
+        $.post("convert", {"data": txtInputRecipe.text(), "multiplier": txtInputMultiplier.val()}, function(data) {
+            txtOutputRecipe.text(data);
+        });
+    }
 
 </script>
 
