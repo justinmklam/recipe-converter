@@ -69,9 +69,18 @@
     });
 
     function onConvertClicked() {
-        $.post("convert", {"data": txtInputRecipe.text(), "multiplier": txtInputMultiplier.val()}, function(data) {
-            txtOutputRecipe.text(data);
-        });
+        $.post(
+            "convert",
+            {"data": txtInputRecipe.val(), "multiplier": txtInputMultiplier.val()},
+            function(data) {
+                txtOutputRecipe.val(data);
+            }
+        );
+    }
+
+    function onClearClicked() {
+        txtInputRecipe.val("");
+        txtOutputRecipe.val("");
     }
 
 </script>
