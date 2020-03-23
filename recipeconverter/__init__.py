@@ -34,16 +34,16 @@ def import_conversions(filename) -> list:
 
 
 class RecipeConverter:
-    # Values from https://www.cooksillustrated.com/how_tos/5490-baking-conversion-chart
-    CONVERSION_TABLE_CSV = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), "gram-conversions.csv"
-    )
-
     OUNCE_TO_GRAM = 28.3495
     POUND_TO_GRAM = 453.592
 
     def __init__(self):
-        self._conversion_table = import_conversions(self.CONVERSION_TABLE_CSV)
+        # Values from https://www.cooksillustrated.com/how_tos/5490-baking-conversion-chart
+        database_path = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), "gram-conversions.csv"
+        )
+
+        self._conversion_table = import_conversions(database_path)
 
     def convert_recipe(self, recipe: str, multiplier=1.0) -> str:
         """Convert a multi-line recipe from volumetric units to mass units
