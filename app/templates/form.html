@@ -85,6 +85,10 @@
 
     function onConvertClicked() {
         if (txtInputRecipe.val().includes("http")) {
+            btnConvert.prop("disabled", true);
+            btnClear.prop("disabled", true);
+            btnPaste.prop("disabled", true);
+
             // Get ingredients from URL, then convert
             $.post(
                 "ingredients_from_url",
@@ -96,6 +100,11 @@
             )
             .fail(function() {
                 alert("Error: Website not supported for " + txtInputRecipe.val())
+            })
+            .always(function() {
+                btnConvert.prop("disabled", false);
+                btnClear.prop("disabled", false);
+                btnPaste.prop("disabled", false);
             })
         }
         else {
