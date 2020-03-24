@@ -26,8 +26,8 @@ def fraction_to_float(fraction: str) -> float:
         except ValueError:
             # Convert combined fraction with unicode (ie. "1 ½")
             fraction_split = fraction.split()
-            fraction_out = (
-                float(fraction_split[0]) + unicodedata.numeric(fraction_split[1])
+            fraction_out = float(fraction_split[0]) + unicodedata.numeric(
+                fraction_split[1]
             )
 
     return fraction_out

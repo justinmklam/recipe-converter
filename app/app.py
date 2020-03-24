@@ -4,12 +4,12 @@ import recipeconverter as rc
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config['SECRET_KEY'] = '7d441f27d441f28567d441fb6176a'
+app.config["SECRET_KEY"] = "7d441f27d441f28567d441fb6176a"
 
 
-@app.route('/', methods=["GET"])
+@app.route("/", methods=["GET"])
 def hello():
-    return render_template('form.html')
+    return render_template("form.html")
 
 
 @app.route("/convert", methods=["POST"])
@@ -31,5 +31,5 @@ def ingredients_from_url():
     return "\n".join(ingredients)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=False)

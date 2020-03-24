@@ -10,7 +10,9 @@ def rc_handler():
 def test_convert_ingredient_line(rc_handler):
     assert rc_handler.convert_volume_to_mass("1 cup flour") == "142 g flour"
     assert rc_handler.convert_volume_to_mass("2 cups flour") == "284 g flour"
-    assert rc_handler.convert_volume_to_mass("1 cup flour", multiplier=2) == "284 g flour"
+    assert (
+        rc_handler.convert_volume_to_mass("1 cup flour", multiplier=2) == "284 g flour"
+    )
     assert rc_handler.convert_volume_to_mass("1 CUP FLOUR") == "142 g flour"
     assert rc_handler.convert_volume_to_mass("1 cup sugar") == "198 g sugar"
     assert rc_handler.convert_volume_to_mass("1 tablespoon sugar") == "12.5 g sugar"
