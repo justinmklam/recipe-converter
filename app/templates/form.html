@@ -29,7 +29,6 @@
                 <textarea name="text" class="form-control" id="input-recipe" placeholder="Paste URL or ingredient list here"></textarea>
                 <br>
                 <button id="btn-convert" class="btn btn-primary" value="Convert">Convert</button>
-                <button id="btn-paste" class="btn btn-secondary" value="Paste">Paste</button>
                 <button id="btn-clear" class="btn btn-secondary" value="Clear">Clear</button>
             </p>
         </div>
@@ -61,7 +60,6 @@
     var btnConvert = $("#btn-convert")
     var btnClear = $("#btn-clear")
     var btnCopy = $("#btn-copy")
-    var btnPaste = $("#btn-paste")
     var txtInputRecipe = $("#input-recipe")
     var txtInputMultiplier = $("#input-multiplier")
     var txtOutputRecipe = $("#output-recipe")
@@ -70,7 +68,6 @@
         btnConvert.on("click", onConvertClicked);
         btnClear.on("click", onClearClicked);
         btnCopy.on("click", onCopyClicked);
-        btnPaste.on("click", onPasteClicked);
     });
 
     function convertRecipe(recipe, multiplier) {
@@ -119,16 +116,6 @@
 
     function onCopyClicked() {
         copyToClipboard(txtOutputRecipe.val());
-    }
-
-    function onPasteClicked() {
-        navigator.clipboard.readText()
-        .then(text => {
-          txtInputRecipe.val(text);
-        })
-        .catch(err => {
-          console.error('Failed to read clipboard contents: ', err);
-        });
     }
 
     // Copies a string to the clipboard. Must be called from within an
