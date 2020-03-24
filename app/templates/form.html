@@ -79,7 +79,7 @@
         btnCopy.on("click", onCopyClicked);
     });
 
-    function onConvertClicked() {
+    function convertRecipe(recipe, multiplier) {
         $.post(
             "convert",
             {"data": txtInputRecipe.val(), "multiplier": txtInputMultiplier.val()},
@@ -87,6 +87,27 @@
                 txtOutputRecipe.val(data);
             }
         );
+    }
+
+    function onConvertClicked() {
+        if (txtInputRecipe.val().includes("http")) {
+            // Get ingredients from URL, then convert
+            $.post(
+                "ingredients_from_url",
+                {"url": txtInputRecipe.val()},
+                function(data) {
+                    txtInputRecipe.val(data)
+                    convertRecipe(data, txtInputMultiplier.val())
+                }
+            )
+            .fail(function() {
+                alert("Error: Website not supported for " + txtInputRecipe.val())
+            })
+        }
+        else {
+            // Ingredients entered,
+            convertRecipe(txtInputRecipe.val(), txtInputMultiplier.val())
+        }
     }
 
     function onClearClicked() {

@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
+from recipe_scrapers import scrape_me
 import recipeconverter as rc
-
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -20,6 +20,15 @@ def convert():
     multiplier = float(request.form["multiplier"])
 
     return recipe.convert_recipe(text, multiplier)
+
+
+@app.route("/ingredients_from_url", methods=["POST"])
+def ingredients_from_url():
+    scraper = scrape_me(request.form["url"])
+
+    ingredients = scraper.ingredients()
+
+    return "\n".join(ingredients)
 
 
 if __name__ == '__main__':
