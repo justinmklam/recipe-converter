@@ -9,6 +9,6 @@ setup(
     url="https://github.com/justinmklam/recipe-converter",
     packages=find_packages(),
     scripts=[],
-    install_requires=["flask", "recipe-scrapers"],
+    install_requires=["flask", "gunicorn", "recipe-scrapers"],
     zip_safe=False,
 )
