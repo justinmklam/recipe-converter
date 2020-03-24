@@ -26,16 +26,7 @@
                         <input type="text" class="form-control" id="input-multiplier" name="multiplier" value=1.0 placeholder="How many of this recipe do you want?">
                     </div>
                 </div>
-                <textarea name="text" class="form-control" id="input-recipe" placeholder="Ingredient list goes here!">
-1⁄2 cup butter
-1 cup sugar
-2 eggs, beaten
-3 bananas, finely crushed (for serious and extreme moist and delicious, try 4 bananas)
-1 1⁄2 cups flour
-1 teaspoon baking soda
-1⁄2 teaspoon salt
-1⁄2 teaspoon vanilla (optional)
-                </textarea>
+                <textarea name="text" class="form-control" id="input-recipe" placeholder="Paste URL or ingredient list here"></textarea>
                 <br>
                 <button id="btn-convert" class="btn btn-primary" value="Convert">Convert</button>
                 <button id="btn-clear" class="btn btn-secondary" value="Clear">Clear</button>
@@ -44,7 +35,7 @@
 
         <div class="col-md-6">
             <h2>Output Recipe</h2>
-            <textarea id="output-recipe" placeholder="Converted recipe will appear here!" readonly></textarea>
+            <textarea id="output-recipe" placeholder="Converted recipe will appear here" readonly></textarea>
             <br><br>
             <button id="btn-copy" class="btn btn-success" value="Copy">Copy to Clipboard</button>
         </div>
@@ -79,7 +70,7 @@
         btnCopy.on("click", onCopyClicked);
     });
 
-    function onConvertClicked() {
+    function convertRecipe(recipe, multiplier) {
         $.post(
             "convert",
             {"data": txtInputRecipe.val(), "multiplier": txtInputMultiplier.val()},
@@ -87,6 +78,27 @@
                 txtOutputRecipe.val(data);
             }
         );
+    }
+
+    function onConvertClicked() {
+        if (txtInputRecipe.val().includes("http")) {
+            // Get ingredients from URL, then convert
+            $.post(
+                "ingredients_from_url",
+                {"url": txtInputRecipe.val()},
+                function(data) {
+                    txtInputRecipe.val(data)
+                    convertRecipe(data, txtInputMultiplier.val())
+                }
+            )
+            .fail(function() {
+                alert("Error: Website not supported for " + txtInputRecipe.val())
+            })
+        }
+        else {
+            // Ingredients entered,
+            convertRecipe(txtInputRecipe.val(), txtInputMultiplier.val())
+        }
     }
 
     function onClearClicked() {
