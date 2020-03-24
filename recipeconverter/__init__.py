@@ -138,7 +138,7 @@ class RecipeConverter:
 
     @staticmethod
     def parse_line(line: str) -> tuple:
-        """Exract components from ingredient line
+        """Extract components from ingredient line
 
         Args:
             line (str): Input line, ie. "1 1/2 cup brown sugar"
