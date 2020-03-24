@@ -20,8 +20,15 @@ def fraction_to_float(fraction: str) -> float:
         # Convert unicode fractions (ie. "½")
         fraction_out = unicodedata.numeric(fraction)
     except TypeError:
-        # Convert normal fraction (ie. "1/2")
-        fraction_out = float(sum(Fraction(s) for s in fraction.split()))
+        try:
+            # Convert normal fraction (ie. "1/2")
+            fraction_out = float(sum(Fraction(s) for s in fraction.split()))
+        except ValueError:
+            # Convert combined fraction with unicode (ie. "1 ½")
+            fraction_split = fraction.split()
+            fraction_out = (
+                float(fraction_split[0]) + unicodedata.numeric(fraction_split[1])
+            )
 
     return fraction_out
 

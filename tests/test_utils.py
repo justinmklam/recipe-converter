@@ -8,6 +8,7 @@ def test_fraction_to_float():
     assert utils.fraction_to_float("1⁄4") == 0.25
     assert utils.fraction_to_float("3⁄4") == 0.75
     assert utils.fraction_to_float("1 1/4") == 1.25
+    assert utils.fraction_to_float("1 ½") == 1.5
     assert utils.fraction_to_float("2") == 2
 
 
