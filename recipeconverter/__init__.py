@@ -70,32 +70,6 @@ class RecipeConverter:
 
         return output.strip()
 
-    def get_ingredient_conversion(self, ingredient: str, unit: str) -> float:
-        """Get conversion factor for the given ingredient
-
-        Args:
-            ingredient (str): ie. Flour, sugar, etc.
-            unit (str): Cup, tablespoon, or teaspoon
-
-        Returns:
-            float: Conversion factor from unit to grams
-        """
-        ingredient_found = False
-
-        for conversion_line in self._conversion_table:
-            if conversion_line["ingredient"] in ingredient:
-                conversion = conversion_line[unit]
-                ingredient_found = True
-                break
-
-        if not ingredient_found:
-            conversion = 1
-            unit_out = unit
-        else:
-            unit_out = "g"
-
-        return conversion, unit_out
-
     def convert_volume_to_mass(self, line: str, multiplier=1.0) -> str:
         """Convert ingredient line from volume to mass.
 
@@ -135,6 +109,32 @@ class RecipeConverter:
             unit_out = " "
 
         return f"{amount_converted}{unit_out}{ingredient}"
+
+    def get_ingredient_conversion(self, ingredient: str, unit: str) -> float:
+        """Get conversion factor for the given ingredient
+
+        Args:
+            ingredient (str): ie. Flour, sugar, etc.
+            unit (str): Cup, tablespoon, or teaspoon
+
+        Returns:
+            float: Conversion factor from unit to grams
+        """
+        ingredient_found = False
+
+        for conversion_line in self._conversion_table:
+            if conversion_line["ingredient"] in ingredient:
+                conversion = conversion_line[unit]
+                ingredient_found = True
+                break
+
+        if not ingredient_found:
+            conversion = 1
+            unit_out = unit
+        else:
+            unit_out = "g"
+
+        return conversion, unit_out
 
     @staticmethod
     def parse_line(line: str) -> tuple:
