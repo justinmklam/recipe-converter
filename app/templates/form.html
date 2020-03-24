@@ -84,7 +84,6 @@
         if (txtInputRecipe.val().includes("http")) {
             btnConvert.prop("disabled", true);
             btnClear.prop("disabled", true);
-            btnPaste.prop("disabled", true);
 
             // Get ingredients from URL, then convert
             $.post(
@@ -101,7 +100,6 @@
             .always(function() {
                 btnConvert.prop("disabled", false);
                 btnClear.prop("disabled", false);
-                btnPaste.prop("disabled", false);
             })
         }
         else {
