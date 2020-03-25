@@ -1,7 +1,7 @@
 import csv
 import os
 import re
-
+from recipe_scrapers import scrape_me
 from recipeconverter import utils
 
 
@@ -49,12 +49,30 @@ class RecipeConverter:
 
         self._conversion_table = import_conversions(database_path)
 
+    def convert_recipe_from_url(self, url: str, multiplier=1.0) -> tuple:
+        """Convert recipe from URL, if supported
+
+        Args:
+            url (str): Recipe URL
+            multiplier (float, optional): Recipe scale factor. Defaults to 1.0.
+
+        Returns:
+            tuple (str): Output recipe
+            tuple (recipe_scrapers.allrecipes.AllRecipes): Recipe scraper object
+        """
+
+        scraper = scrape_me(url)
+
+        ingredients = "\n".join(scraper.ingredients())
+
+        return self.convert_recipe(ingredients, multiplier), scraper
+
     def convert_recipe(self, recipe: str, multiplier=1.0) -> str:
         """Convert a multi-line recipe from volumetric units to mass units
 
         Args:
             recipe (str): Input recipe
-            multiplier (float, optional): Scale factor to multiply recipe by
+            multiplier (float, optional): Recipe scale factor. Defaults to 1.0.
 
         Returns:
             str: Output recipe

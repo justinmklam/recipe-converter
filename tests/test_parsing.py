@@ -71,3 +71,17 @@ def test_convert_recipe(rc_handler):
 2.5 g salt"""
 
     assert recipe_out == expected_recipe_out
+
+
+def test_convert_recipe_from_url(rc_handler):
+    expected_recipe_out = """284 g all-purpose flour
+6 g baking soda
+1.2 g salt
+113.5 g butter
+148.5 g brown sugar
+2 eggs, beaten
+2.3 cup mashed overripe bananas"""
+
+    recipe_out, _ = rc_handler.convert_recipe_from_url("https://www.allrecipes.com/recipe/20144/banana-banana-bread/")
+
+    assert recipe_out == expected_recipe_out
