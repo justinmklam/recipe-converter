@@ -7,6 +7,11 @@ body {
     padding-bottom: 30px;
 }
 
+.grid-hero span {
+    color: #5755d9;
+    text-decoration: underline;
+}
+
 .subtitle {
     font-size: 1em;
     font-weight: inherit;
