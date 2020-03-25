@@ -25,6 +25,10 @@
     white-space: pre-line;
 }
 
+.form-label {
+    padding-left: 10px;
+}
+
 .form-input[readonly] {
     background-color: #fcfcfc;
 }
