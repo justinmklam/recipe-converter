@@ -77,20 +77,20 @@
     </div>
     </div>
     <div id="reader-view" class="modal modal-lg">
-            <a class="modal-overlay" aria-label="Close"></a>
-            <div class="modal-container">
-              <div class="modal-header">
+        <a class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container">
+            <div class="modal-header">
                 <a class="btn btn-clear float-right btn-reader-view-close" aria-label="Close"></a>
                 <div class="modal-title h5">Recipe</div>
-              </div>
-              <div class="modal-body">
+            </div>
+            <div class="modal-body">
                 <div class="content" id="reader-view-content">
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-link btn-reader-view-close">Close</button>
-              </div>
             </div>
+            <div class="modal-footer">
+                <button class="btn btn-link btn-reader-view-close">Close</button>
+            </div>
+        </div>
     </div>
 
     <footer class="section section-footer bg-primary">
@@ -147,10 +147,10 @@
                     function (data) {
                         txtInputRecipe.val(data["ingredients"])
                         convertRecipe(data["ingredients"], txtInputMultiplier.val())
-                            .done(function() {
+                            .done(function () {
                                 // Append instructions below recipe
                                 console.log(data["instructions"])
-                                txtOutputRecipe.val(function() {
+                                txtOutputRecipe.val(function () {
                                     return this.value + "\n\n" + data["instructions"]
                                 })
                             })
@@ -172,9 +172,9 @@
 
                 // Ingredients entered,
                 convertRecipe(ingredients, txtInputMultiplier.val())
-                    .done(function() {
+                    .done(function () {
                         // Append instructions below recipe
-                        txtOutputRecipe.val(function() {
+                        txtOutputRecipe.val(function () {
                             // Add additional line break for readability
                             return this.value + instructions.replace(/\n/g, "\n\n")
                         })
