@@ -1,36 +1,58 @@
+.grid-hero {
+    padding-top: 75px;
+    padding-bottom: 30px;
+}
+
+.subtitle {
+    font-size: 1em;
+    font-weight: inherit;
+    font-style: oblique;
+}
 
 #input-recipe {
-    /* height: calc(100vh - 20px); */
-    width:  100%;      /* calc and viewport to the rescue */
-    resize: vertical;
-    height: 200px;
+    height: 180px;
 }
 
 #output-recipe {
-    width:  100%;      /* calc and viewport to the rescue */
-    min-height: 258px;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 0px;
+    height:220px;
 }
 
-.h2, h2 {
-      margin-bottom: 15px;
+footer {
+    font-size: 0.9em;
+    margin-top:30px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    width: 100%;
 }
 
-h1, h2 {
-    font-family: 'Roboto Slab', sans-serif;
+footer a {
+    color: #c8c8ff!important;
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
+@media (max-width: 599px) {
+    .grid-hero {
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .grid-hero h1 {
+        font-size: 1.7em;
+    }
+
+    .panel {
+        margin-top: 10px;
+    }
 }
 
-.page-header h1 {
-    text-align: center;
-}
+@media (min-width: 600px) {
+    .grid-hero {
+        margin-bottom: 20px;
+    }
 
-.page-header {
-    margin-bottom: 10px;
+    footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        overflow: hidden;
+    }
 }
