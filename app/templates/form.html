@@ -15,167 +15,173 @@
     <div class="section bg-gray">
         <div class="grid-hero container grid-lg text-center" id="overview">
             <h1>The Metric Kitchen</h1>
-            <h2 class="subtitle">Convert your ingredient list from <u>imperial volume</u> to <u>metric weight</u> units.</h2>
+            <h2 class="subtitle">Convert your ingredient list from <u>imperial volume</u> to <u>metric weight</u> units.
+            </h2>
         </div>
     </div>
     <div class="section section-features">
         <div class="container grid-lg">
-          <div class="columns">
-            <div class="column col-6 col-xs-12">
-                <div class="panel">
-                    <div class="panel-header">
-                      <div class="panel-title">Input Recipe</div>
-                    </div>
-                    <div class="panel-nav">
-                      <!-- navigation components: tabs, breadcrumbs or pagination -->
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <div class="container">
-                                <div class="columns">
-                                    <div class="col-2">
-                                      <label class="form-label" for="input-multiplier">Scale</label>
-                                    </div>
-                                    <div class="col-10">
-                                      <input type="number" class="form-input" id="input-multiplier" name="multiplier" value=1.0 placeholder="How many of this recipe do you want?">
+            <div class="columns">
+                <div class="column col-6 col-xs-12">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Input Recipe</div>
+                        </div>
+                        <div class="panel-nav">
+                            <!-- navigation components: tabs, breadcrumbs or pagination -->
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="container">
+                                    <div class="columns">
+                                        <div class="col-2">
+                                            <label class="form-label" for="input-multiplier">Scale</label>
+                                        </div>
+                                        <div class="col-10">
+                                            <input type="number" class="form-input" id="input-multiplier"
+                                                name="multiplier" value=1.0
+                                                placeholder="How many of this recipe do you want?">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                          </div>
-                        <textarea name="text" class="form-input" id="input-recipe" placeholder="Paste URL or ingredient list here"></textarea>
+                            <textarea name="text" class="form-input" id="input-recipe"
+                                placeholder="Paste URL or ingredient list here"></textarea>
+                        </div>
+                        <div class="panel-footer">
+                            <button id="btn-convert" class="btn btn-primary" value="Convert">Convert</button>
+                            <button id="btn-clear" class="btn btn-secondary" value="Clear">Clear</button>
+                        </div>
                     </div>
-                    <div class="panel-footer">
-                        <button id="btn-convert" class="btn btn-primary" value="Convert">Convert</button>
-                        <button id="btn-clear" class="btn btn-secondary" value="Clear">Clear</button>
+                </div>
+                <div class="column col-6 col-xs-12">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Output Recipe</div>
+                        </div>
+                        <div class="panel-nav">
+                            <!-- navigation components: tabs, breadcrumbs or pagination -->
+                        </div>
+                        <div class="panel-body">
+                            <textarea class="form-input" id="output-recipe"
+                                placeholder="Converted recipe will appear here" readonly></textarea>
+                        </div>
+                        <div class="panel-footer">
+                            <button id="btn-copy" class="btn btn-success" value="Copy">Copy to Clipboard</button>
+                        </div>
                     </div>
-                  </div>
-            </div>
-            <div class="column col-6 col-xs-12">
-                <div class="panel">
-                    <div class="panel-header">
-                        <div class="panel-title">Output Recipe</div>
-                      </div>
-                      <div class="panel-nav">
-                        <!-- navigation components: tabs, breadcrumbs or pagination -->
-                      </div>
-                      <div class="panel-body">
-                          <textarea class="form-input" id="output-recipe" placeholder="Converted recipe will appear here" readonly></textarea>
-                      </div>
-                      <div class="panel-footer">
-                <button id="btn-copy" class="btn btn-success" value="Copy">Copy to Clipboard</button>
-                      </div>
                 </div>
             </div>
-            </div>
-          </div>
         </div>
-      </div>
-
-<footer class="section section-footer bg-primary">
-    <div class="docs-footer container grid-lg text-center">
-        <i>
-            Check out this project on <a href="https://github.com/justinmklam/recipe-converter">GitHub</a>, or
-            read about my other projects at <a href="http://justinmklam.com/">justinmklam.com</a>! · <span class="version">v2.0.0</span>
-        </i>
     </div>
-</footer>
+    </div>
 
-<script src="{{ url_for('static', filename='js/toast.js') }}"></script>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
-    var btnConvert = $("#btn-convert")
-    var btnClear = $("#btn-clear")
-    var btnCopy = $("#btn-copy")
-    var txtInputRecipe = $("#input-recipe")
-    var txtInputMultiplier = $("#input-multiplier")
-    var txtOutputRecipe = $("#output-recipe")
+    <footer class="section section-footer bg-primary">
+        <div class="docs-footer container grid-lg text-center">
+            <i>
+                Check out this project on <a href="https://github.com/justinmklam/recipe-converter">GitHub</a>, or
+                read about my other projects at <a href="http://justinmklam.com/">justinmklam.com</a>! · <span
+                    class="version">v2.0.0</span>
+            </i>
+        </div>
+    </footer>
 
-    window.addEventListener("load", function () {
-        btnConvert.on("click", onConvertClicked);
-        btnClear.on("click", onClearClicked);
-        btnCopy.on("click", onCopyClicked);
-    });
+    <script src="{{ url_for('static', filename='js/toast.js') }}"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        var btnConvert = $("#btn-convert")
+        var btnClear = $("#btn-clear")
+        var btnCopy = $("#btn-copy")
+        var txtInputRecipe = $("#input-recipe")
+        var txtInputMultiplier = $("#input-multiplier")
+        var txtOutputRecipe = $("#output-recipe")
 
-    function convertRecipe(recipe, multiplier) {
-        $.post(
-            "convert",
-            {"data": txtInputRecipe.val(), "multiplier": txtInputMultiplier.val()},
-            function(data) {
-                txtOutputRecipe.val(data);
-            }
-        );
-    }
+        window.addEventListener("load", function () {
+            btnConvert.on("click", onConvertClicked);
+            btnClear.on("click", onClearClicked);
+            btnCopy.on("click", onCopyClicked);
+        });
 
-    function onConvertClicked() {
-        if (txtInputRecipe.val().includes("http")) {
-            btnConvert.prop("disabled", true);
-            btnClear.prop("disabled", true);
-
-            // Get ingredients from URL, then convert
+        function convertRecipe(recipe, multiplier) {
             $.post(
-                "ingredients_from_url",
-                {"url": txtInputRecipe.val()},
-                function(data) {
-                    txtInputRecipe.val(data)
-                    convertRecipe(data, txtInputMultiplier.val())
+                "convert",
+                { "data": txtInputRecipe.val(), "multiplier": txtInputMultiplier.val() },
+                function (data) {
+                    txtOutputRecipe.val(data);
                 }
-            )
-            .fail(function() {
-                alert("Error: Website not supported for " + txtInputRecipe.val())
-            })
-            .always(function() {
-                btnConvert.prop("disabled", false);
-                btnClear.prop("disabled", false);
-            })
+            );
         }
-        else {
-            // Ingredients entered,
-            convertRecipe(txtInputRecipe.val(), txtInputMultiplier.val())
-        }
-    }
 
-    function onClearClicked() {
-        txtInputRecipe.val("");
-        txtInputRecipe.focus();
-    }
+        function onConvertClicked() {
+            if (txtInputRecipe.val().includes("http")) {
+                btnConvert.prop("disabled", true);
+                btnClear.prop("disabled", true);
 
-    function onCopyClicked() {
-        copyToClipboard(txtOutputRecipe.val());
-        new Toast({message: 'Output recipe copied to clipboard!', type: 'success'});
-    }
-
-    // Copies a string to the clipboard. Must be called from within an
-    // event handler such as click. May return false if it failed, but
-    // this is not always possible. Browser support for Chrome 43+,
-    // Firefox 42+, Safari 10+, Edge and Internet Explorer 10+.
-    // Internet Explorer: The clipboard feature may be disabled by
-    // an administrator. By default a prompt is shown the first
-    // time the clipboard is used (per session).
-    function copyToClipboard(text) {
-        if (window.clipboardData && window.clipboardData.setData) {
-            // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
-            return clipboardData.setData("Text", text);
-
-        }
-        else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-            var textarea = document.createElement("textarea");
-            textarea.textContent = text;
-            textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+                // Get ingredients from URL, then convert
+                $.post(
+                    "ingredients_from_url",
+                    { "url": txtInputRecipe.val() },
+                    function (data) {
+                        txtInputRecipe.val(data)
+                        convertRecipe(data, txtInputMultiplier.val())
+                    }
+                )
+                    .fail(function () {
+                        alert("Error: Website not supported for " + txtInputRecipe.val())
+                    })
+                    .always(function () {
+                        btnConvert.prop("disabled", false);
+                        btnClear.prop("disabled", false);
+                    })
             }
-            catch (ex) {
-                console.warn("Copy to clipboard failed.", ex);
-                return false;
-            }
-            finally {
-                document.body.removeChild(textarea);
+            else {
+                // Ingredients entered,
+                convertRecipe(txtInputRecipe.val(), txtInputMultiplier.val())
             }
         }
-    }
 
-</script>
+        function onClearClicked() {
+            txtInputRecipe.val("");
+            txtInputRecipe.focus();
+        }
+
+        function onCopyClicked() {
+            copyToClipboard(txtOutputRecipe.val());
+            new Toast({ message: 'Output recipe copied to clipboard!', type: 'success' });
+        }
+
+        // Copies a string to the clipboard. Must be called from within an
+        // event handler such as click. May return false if it failed, but
+        // this is not always possible. Browser support for Chrome 43+,
+        // Firefox 42+, Safari 10+, Edge and Internet Explorer 10+.
+        // Internet Explorer: The clipboard feature may be disabled by
+        // an administrator. By default a prompt is shown the first
+        // time the clipboard is used (per session).
+        function copyToClipboard(text) {
+            if (window.clipboardData && window.clipboardData.setData) {
+                // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
+                return clipboardData.setData("Text", text);
+
+            }
+            else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+                var textarea = document.createElement("textarea");
+                textarea.textContent = text;
+                textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+                }
+                catch (ex) {
+                    console.warn("Copy to clipboard failed.", ex);
+                    return false;
+                }
+                finally {
+                    document.body.removeChild(textarea);
+                }
+            }
+        }
+
+    </script>
 
 </html>
