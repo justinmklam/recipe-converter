@@ -165,8 +165,20 @@
                     })
             }
             else {
+                var split_str = txtInputRecipe.val().split("\n\n\n")
+
+                var ingredients = split_str[0]
+                var instructions = split_str[1]
+
                 // Ingredients entered,
-                convertRecipe(txtInputRecipe.val(), txtInputMultiplier.val())
+                convertRecipe(ingredients, txtInputMultiplier.val())
+                    .done(function() {
+                        // Append instructions below recipe
+                        txtOutputRecipe.val(function() {
+                            // Add additional line break for readability
+                            return this.value + instructions.replace(/\n/g, "\n\n")
+                        })
+                    })
             }
         }
 
