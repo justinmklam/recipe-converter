@@ -1,4 +1,4 @@
-#overview {
+.grid-hero {
     padding-top: 75px;
     padding-bottom: 50px;
 }
@@ -18,10 +18,30 @@
 }
 
 footer {
+    font-size: 0.9em;
     margin-top:30px;
     padding-top: 15px;
     padding-bottom: 10px;
     width: 100%;
+}
+
+footer a {
+    color: #c8c8ff!important;
+}
+
+@media (max-width: 599px) {
+    .grid-hero {
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .grid-hero h1 {
+        font-size: 1.7em;
+    }
+
+    .panel {
+        margin-top: 10px;
+    }
 }
 
 @media (min-width: 600px) {
