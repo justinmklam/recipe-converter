@@ -21,6 +21,10 @@
     height:220px;
 }
 
+#reader-view .modal-container {
+    max-height: 100%;
+}
+
 .modal-body .content {
     white-space: pre-line;
 }
