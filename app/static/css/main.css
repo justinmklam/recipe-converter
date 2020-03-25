@@ -21,8 +21,14 @@
     height:220px;
 }
 
-#reader-view-content {
+.modal-body .content {
     white-space: pre-line;
+}
+
+.modal-body .content pre {
+    white-space: pre-line;
+    font-size: 0.9em;
+    padding-left: 15px;
 }
 
 .form-label {
