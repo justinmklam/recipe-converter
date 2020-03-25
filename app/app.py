@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from recipe_scrapers import scrape_me
 import recipeconverter as rc
 
@@ -26,9 +26,10 @@ def convert():
 def ingredients_from_url():
     scraper = scrape_me(request.form["url"])
 
-    ingredients = scraper.ingredients()
-
-    return "\n".join(ingredients)
+    return jsonify({
+        "ingredients": "\n".join(scraper.ingredients()),
+        "instructions": scraper.instructions().replace("\n", "\n\n")
+    })
 
 
 if __name__ == "__main__":

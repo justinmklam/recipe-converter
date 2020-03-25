@@ -126,7 +126,7 @@
         });
 
         function convertRecipe(recipe, multiplier) {
-            $.post(
+            return $.post(
                 "convert",
                 { "data": txtInputRecipe.val(), "multiplier": txtInputMultiplier.val() },
                 function (data) {
@@ -145,8 +145,15 @@
                     "ingredients_from_url",
                     { "url": txtInputRecipe.val() },
                     function (data) {
-                        txtInputRecipe.val(data)
-                        convertRecipe(data, txtInputMultiplier.val())
+                        txtInputRecipe.val(data["ingredients"])
+                        convertRecipe(data["ingredients"], txtInputMultiplier.val())
+                            .done(function() {
+                                // Append instructions below recipe
+                                console.log(data["instructions"])
+                                txtOutputRecipe.val(function() {
+                                    return this.value + "\n\n" + data["instructions"]
+                                })
+                            })
                     }
                 )
                     .fail(function () {

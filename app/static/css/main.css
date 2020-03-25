@@ -22,7 +22,7 @@
 }
 
 #reader-view-content {
-    white-space: pre;
+    white-space: pre-line;
 }
 
 .form-input[readonly] {
