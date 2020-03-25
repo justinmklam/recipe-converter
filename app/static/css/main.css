@@ -21,6 +21,10 @@
     height:220px;
 }
 
+#reader-view-content {
+    white-space: pre;
+}
+
 .form-input[readonly] {
     background-color: #fcfcfc;
 }

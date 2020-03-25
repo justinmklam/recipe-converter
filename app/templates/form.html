@@ -68,12 +68,29 @@
                         </div>
                         <div class="panel-footer">
                             <button id="btn-copy" class="btn btn-success" value="Copy">Copy to Clipboard</button>
+                            <button id="btn-reader-view" class="btn btn-secondary">Reader View</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    <div id="reader-view" class="modal modal-lg">
+            <a href="#close" class="modal-overlay" aria-label="Close"></a>
+            <div class="modal-container">
+              <div class="modal-header">
+                <a href="" class="btn btn-clear float-right btn-reader-view-close" aria-label="Close"></a>
+                <div class="modal-title h5">Recipe</div>
+              </div>
+              <div class="modal-body">
+                <div class="content" id="reader-view-content">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-link btn-reader-view-close">Close</button>
+              </div>
+            </div>
     </div>
 
     <footer class="section section-footer bg-primary">
@@ -92,14 +109,20 @@
         var btnConvert = $("#btn-convert")
         var btnClear = $("#btn-clear")
         var btnCopy = $("#btn-copy")
+        var btnReaderView = $("#btn-reader-view")
+        var btnReaderViewClose = $(".btn-reader-view-close")
         var txtInputRecipe = $("#input-recipe")
         var txtInputMultiplier = $("#input-multiplier")
+        var txtReaderView = $("#reader-view-content")
         var txtOutputRecipe = $("#output-recipe")
+        var modalReaderView = $("#reader-view")
 
         window.addEventListener("load", function () {
             btnConvert.on("click", onConvertClicked);
             btnClear.on("click", onClearClicked);
             btnCopy.on("click", onCopyClicked);
+            btnReaderView.on("click", onReaderViewClicked);
+            btnReaderViewClose.on("click", onReaderViewCloseClicked);
         });
 
         function convertRecipe(recipe, multiplier) {
@@ -148,6 +171,16 @@
         function onCopyClicked() {
             copyToClipboard(txtOutputRecipe.val());
             new Toast({ message: 'Output recipe copied to clipboard!', type: 'success' });
+        }
+
+        function onReaderViewClicked() {
+            txtReaderView.text(txtOutputRecipe.val());
+            console.log(txtOutputRecipe.val())
+            modalReaderView.addClass("active")
+        }
+
+        function onReaderViewCloseClicked() {
+            modalReaderView.removeClass("active")
         }
 
         // Copies a string to the clipboard. Must be called from within an
