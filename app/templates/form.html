@@ -128,7 +128,7 @@
         function convertRecipe(recipe, multiplier) {
             return $.post(
                 "convert",
-                { "data": txtInputRecipe.val(), "multiplier": txtInputMultiplier.val() },
+                { "data": recipe, "multiplier": multiplier },
                 function (data) {
                     txtOutputRecipe.val(data);
                 }
