@@ -46,11 +46,12 @@
                                 </div>
                             </div>
                             <textarea name="text" class="form-input" id="input-recipe"
-                                placeholder="Paste URL or ingredient list here"></textarea>
+                                placeholder="Paste URL or recipe here"></textarea>
                         </div>
                         <div class="panel-footer">
                             <button id="btn-convert" class="btn btn-primary" value="Convert">Convert</button>
                             <button id="btn-clear" class="btn btn-secondary" value="Clear">Clear</button>
+                            <button id="btn-help" class="btn btn-link">Help</button>
                         </div>
                     </div>
                 </div>
@@ -64,16 +65,89 @@
                         </div>
                         <div class="panel-body">
                             <textarea class="form-input" id="output-recipe"
-                                placeholder="Converted recipe will appear here" readonly></textarea>
+                                placeholder="Converted recipe will appear here"></textarea>
                         </div>
                         <div class="panel-footer">
                             <button id="btn-copy" class="btn btn-success" value="Copy">Copy to Clipboard</button>
+                            <button id="btn-reader-view" class="btn btn-secondary">Reader View</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    <div id="reader-view" class="modal modal-lg">
+        <a class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container">
+            <div class="modal-header">
+                <a class="btn btn-clear float-right btn-reader-view-close" aria-label="Close"></a>
+                <div class="modal-title h5">Recipe</div>
+            </div>
+            <div class="modal-body">
+                <div class="content" id="reader-view-content">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-link btn-reader-view-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-help" class="modal modal">
+        <a class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container">
+            <div class="modal-header">
+                <a class="btn btn-clear float-right btn-help-close" aria-label="Close"></a>
+                <div class="modal-title h5">Using the App</div>
+            </div>
+            <div class="modal-body">
+                <div class="content">
+                    The input recipe accepts either a <strong>URL</strong> (if the website is supported), or a <strong>list of ingredients</strong>. The recipe instructions can also be added below the ingredients, <strong>separated by two new lines</strong>.
+
+                    The converted recipe, both ingredients and instructions, can be viewed in the <i>Reader View</i> after conversion. This provides a clean way to view the recipe without any distractions.
+
+                    For example:
+                    <pre>
+2 cups all-purpose flour
+1 teaspoon baking soda
+1/4 teaspoon salt
+1/2 cup butter
+3/4 cup brown sugar
+2 eggs, beaten
+2 1/3 cups mashed overripe bananas
+
+
+Preheat oven to 350 degrees F (175 degrees C).
+In a large bowl, combine flour, baking soda and salt. In a separate bowl, cream together butter and brown sugar.
+Stir in eggs and mashed bananas until well blended. Stir banana mixture into flour mixture; stir just to moisten. Pour batter into prepared loaf pan.
+Bake in preheated oven for 60 to 65 minutes. Let bread cool in pan for 10 minutes, then turn out onto a wire rack.
+                </pre>
+                Will convert to:
+                <pre>
+284 g all-purpose flour
+6 g baking soda
+1.2 g salt
+113.5 g butter
+148.5 g brown sugar
+2 eggs, beaten
+2.3 cup mashed overripe bananas
+
+Preheat oven to 350 degrees F (175 degrees C).
+
+In a large bowl, combine flour, baking soda and salt. In a separate bowl, cream together butter and brown sugar.
+
+Stir in eggs and mashed bananas until well blended. Stir banana mixture into flour mixture; stir just to moisten. Pour batter into prepared loaf pan.
+
+Bake in preheated oven for 60 to 65 minutes. Let bread cool in pan for 10 minutes, then turn out onto a wire rack.
+                </pre>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-link btn-help-close">Close</button>
+            </div>
+        </div>
     </div>
 
     <footer class="section section-footer bg-primary">
@@ -92,20 +166,31 @@
         var btnConvert = $("#btn-convert")
         var btnClear = $("#btn-clear")
         var btnCopy = $("#btn-copy")
+        var btnHelp = $("#btn-help")
+        var btnHelpClose = $(".btn-help-close")
+        var btnReaderView = $("#btn-reader-view")
+        var btnReaderViewClose = $(".btn-reader-view-close")
         var txtInputRecipe = $("#input-recipe")
         var txtInputMultiplier = $("#input-multiplier")
+        var txtReaderView = $("#reader-view-content")
         var txtOutputRecipe = $("#output-recipe")
+        var modalReaderView = $("#reader-view")
+        var modalHelp = $("#modal-help")
 
         window.addEventListener("load", function () {
             btnConvert.on("click", onConvertClicked);
             btnClear.on("click", onClearClicked);
             btnCopy.on("click", onCopyClicked);
+            btnHelp.on("click", onHelpClicked);
+            btnHelpClose.on("click", onHelpCloseClicked);
+            btnReaderView.on("click", onReaderViewClicked);
+            btnReaderViewClose.on("click", onReaderViewCloseClicked);
         });
 
         function convertRecipe(recipe, multiplier) {
-            $.post(
+            return $.post(
                 "convert",
-                { "data": txtInputRecipe.val(), "multiplier": txtInputMultiplier.val() },
+                { "data": recipe, "multiplier": multiplier },
                 function (data) {
                     txtOutputRecipe.val(data);
                 }
@@ -122,12 +207,19 @@
                     "ingredients_from_url",
                     { "url": txtInputRecipe.val() },
                     function (data) {
-                        txtInputRecipe.val(data)
-                        convertRecipe(data, txtInputMultiplier.val())
+                        txtInputRecipe.val(data["ingredients"])
+                        convertRecipe(data["ingredients"], txtInputMultiplier.val())
+                            .done(function () {
+                                // Append instructions below recipe
+                                console.log(data["instructions"])
+                                txtOutputRecipe.val(function () {
+                                    return this.value + "\n\n" + data["instructions"]
+                                })
+                            })
                     }
                 )
                     .fail(function () {
-                        alert("Error: Website not supported for " + txtInputRecipe.val())
+                        alert("Parsing error: Website not supported for " + txtInputRecipe.val() + "\n\nPlease manually copy the recipe into the input box.")
                     })
                     .always(function () {
                         btnConvert.prop("disabled", false);
@@ -135,8 +227,23 @@
                     })
             }
             else {
+                var split_str = txtInputRecipe.val().split("\n\n\n")
+
+                var ingredients = split_str[0]
+                var instructions = split_str[1]
+
+                console.debug(ingredients)
+                console.debug(instructions)
+
                 // Ingredients entered,
-                convertRecipe(txtInputRecipe.val(), txtInputMultiplier.val())
+                convertRecipe(ingredients, txtInputMultiplier.val())
+                    .done(function () {
+                        // Append instructions below recipe
+                        txtOutputRecipe.val(function () {
+                            // Add additional line break for readability
+                            return this.value + "\n\n" + instructions.replace(/\n/g, "\n\n")
+                        })
+                    })
             }
         }
 
@@ -148,6 +255,24 @@
         function onCopyClicked() {
             copyToClipboard(txtOutputRecipe.val());
             new Toast({ message: 'Output recipe copied to clipboard!', type: 'success' });
+        }
+
+        function onHelpClicked() {
+            modalHelp.addClass("active");
+        }
+
+        function onHelpCloseClicked() {
+            modalHelp.removeClass("active");
+        }
+
+        function onReaderViewClicked() {
+            txtReaderView.text(txtOutputRecipe.val());
+            console.log(txtOutputRecipe.val())
+            modalReaderView.addClass("active")
+        }
+
+        function onReaderViewCloseClicked() {
+            modalReaderView.removeClass("active")
         }
 
         // Copies a string to the clipboard. Must be called from within an

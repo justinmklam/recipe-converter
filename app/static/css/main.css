@@ -21,6 +21,24 @@
     height:220px;
 }
 
+#reader-view .modal-container {
+    max-height: 100%;
+}
+
+.modal-body .content {
+    white-space: pre-line;
+}
+
+.modal-body .content pre {
+    white-space: pre-line;
+    font-size: 0.9em;
+    padding-left: 15px;
+}
+
+.form-label {
+    padding-left: 10px;
+}
+
 .form-input[readonly] {
     background-color: #fcfcfc;
 }
