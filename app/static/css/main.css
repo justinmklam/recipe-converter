@@ -9,6 +9,10 @@
     font-style: oblique;
 }
 
+.panel-title {
+    font-weight: 500;
+}
+
 #input-recipe {
     height: 180px;
 }
