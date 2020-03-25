@@ -17,6 +17,10 @@
     height:220px;
 }
 
+.form-input[readonly] {
+    background-color: #fcfcfc;
+}
+
 footer {
     font-size: 0.9em;
     margin-top:30px;
