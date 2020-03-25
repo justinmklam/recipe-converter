@@ -1,6 +1,6 @@
 .grid-hero {
     padding-top: 75px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
 .subtitle {
@@ -45,6 +45,10 @@ footer a {
 }
 
 @media (min-width: 600px) {
+    .grid-hero {
+        margin-bottom: 20px;
+    }
+
     footer {
         position: absolute;
         left: 0;
