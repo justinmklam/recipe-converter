@@ -9,14 +9,17 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/toast.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
 
 <body>
 
     <div class="section bg-gray">
         <div class="grid-hero container grid-lg text-center" id="overview">
             <h1>The Metric Kitchen</h1>
-            <h2 class="subtitle">Convert your recipes from <span>imperial volume</span> to <span>metric weight</span> units!
+            <h2 class="subtitle">Convert your recipes from <span>imperial volume</span> to <span>metric weight</span>
+                units!
             </h2>
         </div>
     </div>
@@ -77,7 +80,8 @@
             </div>
         </div>
     </div>
-    </div>
+
+    <!-- Reader view modal -->
     <div id="reader-view" class="modal modal-lg">
         <a class="modal-overlay" aria-label="Close"></a>
         <div class="modal-container">
@@ -95,6 +99,7 @@
         </div>
     </div>
 
+    <!-- Help modal -->
     <div id="modal-help" class="modal modal">
         <a class="modal-overlay" aria-label="Close"></a>
         <div class="modal-container">
@@ -104,9 +109,12 @@
             </div>
             <div class="modal-body">
                 <div class="content">
-                    The input recipe accepts either a <strong>URL</strong> (if the website is supported), or a <strong>list of ingredients</strong>. The recipe instructions can also be added below the ingredients, <strong>separated by two new lines</strong>.
+                    The input recipe accepts either a <strong>URL</strong> (if the website is supported), or a
+                    <strong>list of ingredients</strong>. The recipe instructions can also be added below the
+                    ingredients, <strong>separated by two new lines</strong>.
 
-                    The converted recipe, both ingredients and instructions, can be viewed in the <i>Reader View</i> after conversion. This provides a clean way to view the recipe without any distractions.
+                    The converted recipe, both ingredients and instructions, can be viewed in the <i>Reader View</i>
+                    after conversion. This provides a clean way to view the recipe without any distractions.
 
                     For example:
                     <pre>
@@ -124,8 +132,8 @@ In a large bowl, combine flour, baking soda and salt. In a separate bowl, cream 
 Stir in eggs and mashed bananas until well blended. Stir banana mixture into flour mixture; stir just to moisten. Pour batter into prepared loaf pan.
 Bake in preheated oven for 60 to 65 minutes. Let bread cool in pan for 10 minutes, then turn out onto a wire rack.
                 </pre>
-                Will convert to:
-                <pre>
+                    Will convert to:
+                    <pre>
 284 g all-purpose flour
 6 g baking soda
 1.2 g salt
