@@ -100,7 +100,7 @@ class RecipeConverter:
         Returns:
             str: Converted line, ie. "120.0 g flour
         """
-        amount, unit, ingredient = self.parse_line(line.lower())
+        amount, unit, ingredient = self.extract_from_line(line.lower())
 
         amount = utils.fraction_to_float(amount)
 
@@ -155,7 +155,7 @@ class RecipeConverter:
         return conversion, unit_out
 
     @staticmethod
-    def parse_line(line: str) -> tuple:
+    def extract_from_line(line: str) -> tuple:
         """Extract components from ingredient line
 
         Args:

@@ -38,7 +38,7 @@ def test_parse_ingredient_line(rc_handler):
     ]
 
     for line in lines:
-        amount, unit, ingredient = rc_handler.parse_line(" ".join(line))
+        amount, unit, ingredient = rc_handler.extract_from_line(" ".join(line))
         assert amount == line[0]
         assert unit == line[1]
         assert ingredient == line[2]
@@ -51,7 +51,7 @@ def test_parse_incompatible_ingredient_line(rc_handler):
     ]
 
     for line in lines:
-        amount, unit, ingredient = rc_handler.parse_line(" ".join(line))
+        amount, unit, ingredient = rc_handler.extract_from_line(" ".join(line))
         assert amount == line[0]
         assert unit == ""
         assert ingredient == line[1]
