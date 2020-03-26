@@ -1,114 +1,126 @@
-var btnConvert = $("#btn-convert")
-var btnClear = $("#btn-clear")
-var btnCopy = $("#btn-copy")
-var btnHelp = $("#btn-help")
-var btnHelpClose = $(".btn-help-close")
-var btnReaderView = $("#btn-reader-view")
-var btnReaderViewClose = $(".btn-reader-view-close")
-var txtInputRecipe = $("#input-recipe")
-var txtInputMultiplier = $("#input-multiplier")
-var txtReaderView = $("#reader-view-content")
-var txtOutputRecipe = $("#output-recipe")
-var modalReaderView = $("#reader-view")
-var modalHelp = $("#modal-help")
+var App = {
+    init: function() {
+        App.bindUI();
+    },
 
-window.addEventListener("load", function () {
-    btnConvert.on("click", onConvertClicked);
-    btnClear.on("click", onClearClicked);
-    btnCopy.on("click", onCopyClicked);
-    btnHelp.on("click", onHelpClicked);
-    btnHelpClose.on("click", onHelpCloseClicked);
-    btnReaderView.on("click", onReaderViewClicked);
-    btnReaderViewClose.on("click", onReaderViewCloseClicked);
-});
+    components: {
+        btnConvert: $("#btn-convert"),
+        btnClear: $("#btn-clear"),
+        btnCopy: $("#btn-copy"),
+        btnHelp: $("#btn-help"),
+        btnHelpClose: $(".btn-help-close"),
+        btnReaderView: $("#btn-reader-view"),
+        btnReaderViewClose: $(".btn-reader-view-close"),
+        txtInputRecipe: $("#input-recipe"),
+        txtInputMultiplier: $("#input-multiplier"),
+        txtReaderView: $("#reader-view-content"),
+        txtOutputRecipe: $("#output-recipe"),
+        modalReaderView: $("#reader-view"),
+        modalHelp: $("#modal-help")
+    },
 
-function convertRecipe(recipe, multiplier) {
-    return $.post(
-        "convert",
-        { "data": recipe, "multiplier": multiplier },
-        function (data) {
-            txtOutputRecipe.val(data);
-        }
-    );
-}
+    routes: {
+        convert: "convert",
+        ingredientFromUrl: "ingredients_from_url"
+    },
 
-function onConvertClicked() {
-    if (txtInputRecipe.val().includes("http")) {
-        btnConvert.prop("disabled", true);
-        btnClear.prop("disabled", true);
+    bindUI: function() {
+        App.components.btnConvert.on("click", App.onConvertClicked);
+        App.components.btnClear.on("click", App.onClearClicked);
+        App.components.btnCopy.on("click", App.onCopyClicked);
+        App.components.btnHelp.on("click", App.onHelpClicked);
+        App.components.btnHelpClose.on("click", App.onHelpCloseClicked);
+        App.components.btnReaderView.on("click", App.onReaderViewClicked);
+        App.components.btnReaderViewClose.on("click", App.onReaderViewCloseClicked);
+    },
 
-        // Get ingredients from URL, then convert
-        $.post(
-            "ingredients_from_url",
-            { "url": txtInputRecipe.val() },
+    convertRecipe: function(recipe, multiplier) {
+        return $.post(
+            App.routes.convert,
+            { "data": recipe, "multiplier": multiplier },
             function (data) {
-                txtInputRecipe.val(data["ingredients"])
-                convertRecipe(data["ingredients"], txtInputMultiplier.val())
-                    .done(function () {
-                        // Append instructions below recipe
-                        console.log(data["instructions"])
-                        txtOutputRecipe.val(function () {
-                            return this.value + "\n\n" + data["instructions"]
-                        })
-                    })
+                App.components.txtOutputRecipe.val(data);
             }
-        )
-            .fail(function () {
-                alert("Parsing error: Website not supported for " + txtInputRecipe.val() + "\n\nPlease manually copy the recipe into the input box.")
-            })
-            .always(function () {
-                btnConvert.prop("disabled", false);
-                btnClear.prop("disabled", false);
-            })
-    }
-    else {
-        var split_str = txtInputRecipe.val().split("\n\n\n")
+        );
+    },
 
-        var ingredients = split_str[0]
-        var instructions = split_str[1]
+    onConvertClicked: function() {
+        if (App.components.txtInputRecipe.val().includes("http")) {
+            App.components.btnConvert.prop("disabled", true);
+            App.components.btnClear.prop("disabled", true);
 
-        console.debug(ingredients)
-        console.debug(instructions)
-
-        // Ingredients entered,
-        convertRecipe(ingredients, txtInputMultiplier.val())
-            .done(function () {
-                // Append instructions below recipe
-                txtOutputRecipe.val(function () {
-                    // Add additional line break for readability
-                    return this.value + "\n\n" + instructions.replace(/\n/g, "\n\n")
+            // Get ingredients from URL, then convert
+            $.post(
+                App.routes.ingredientFromUrl,
+                { "url": App.components.txtInputRecipe.val() },
+                function (data) {
+                    App.components.txtInputRecipe.val(data["ingredients"])
+                    App.convertRecipe(data["ingredients"], App.components.txtInputMultiplier.val())
+                        .done(function () {
+                            // Append instructions below recipe
+                            App.components.txtOutputRecipe.val(function () {
+                                return this.value + "\n\n" + data["instructions"]
+                            })
+                        })
+                }
+            )
+                .fail(function () {
+                    alert("Parsing error: Website not supported for " + App.components.txtInputRecipe.val() + "\n\nPlease manually copy the recipe into the input box.")
                 })
-            })
-    }
+                .always(function () {
+                    App.components.btnConvert.prop("disabled", false);
+                    App.components.btnClear.prop("disabled", false);
+                })
+        }
+        else {
+            var split_str = App.components.txtInputRecipe.val().split("\n\n\n")
+
+            var ingredients = split_str[0]
+            var instructions = split_str[1]
+
+            console.debug(ingredients)
+            console.debug(instructions)
+
+            // Ingredients entered,
+            App.convertRecipe(ingredients, App.components.txtInputMultiplier.val())
+                .done(function () {
+                    // Append instructions below recipe
+                    App.components.txtOutputRecipe.val(function () {
+                        // Add additional line break for readability
+                        return this.value + "\n\n" + instructions.replace(/\n/g, "\n\n")
+                    })
+                })
+        }
+    },
+
+    onClearClicked: function() {
+        App.components.txtInputRecipe.val("");
+        App.components.txtInputRecipe.focus();
+    },
+
+    onCopyClicked: function() {
+        copyToClipboard(App.components.txtOutputRecipe.val());
+        new Toast({ message: 'Output recipe copied to clipboard!', type: 'success' });
+    },
+
+    onHelpClicked: function() {
+        App.components.modalHelp.addClass("active");
+    },
+
+    onHelpCloseClicked: function() {
+        App.components.modalHelp.removeClass("active");
+    },
+
+    onReaderViewClicked: function() {
+        App.components.txtReaderView.text(App.components.txtOutputRecipe.val());
+        App.components.modalReaderView.addClass("active")
+    },
+
+    onReaderViewCloseClicked: function() {
+        App.components.modalReaderView.removeClass("active")
+    },
 }
 
-function onClearClicked() {
-    txtInputRecipe.val("");
-    txtInputRecipe.focus();
-}
-
-function onCopyClicked() {
-    copyToClipboard(txtOutputRecipe.val());
-    new Toast({ message: 'Output recipe copied to clipboard!', type: 'success' });
-}
-
-function onHelpClicked() {
-    modalHelp.addClass("active");
-}
-
-function onHelpCloseClicked() {
-    modalHelp.removeClass("active");
-}
-
-function onReaderViewClicked() {
-    txtReaderView.text(txtOutputRecipe.val());
-    console.log(txtOutputRecipe.val())
-    modalReaderView.addClass("active")
-}
-
-function onReaderViewCloseClicked() {
-    modalReaderView.removeClass("active")
-}
 
 // Copies a string to the clipboard. Must be called from within an
 // event handler such as click. May return false if it failed, but
@@ -141,3 +153,7 @@ function copyToClipboard(text) {
         }
     }
 }
+
+window.addEventListener("load", function () {
+    App.init();
+});
