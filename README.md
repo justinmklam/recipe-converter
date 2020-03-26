@@ -14,11 +14,12 @@ Web app to convert recipes from imperial volume to metric weight units.
 ## Features
 
 + Convert cups, tablespoons, and teaspoons of common ingredients to grams
-+ Scale the recipe up or down
++ Scale the recipe to any value
 + Option to load recipe from URL (if website is supported)
 + Reader view for distraction-free viewing (no ads or other fluff!)
 
 ## Built With
++ [Recipe Scrapers](https://github.com/hhursev/recipe-scrapers) library (thanks [hhursev](https://github.com/hhursev))
 + [Flask](http://flask.pocoo.org/) backend
 + [Spectre](https://picturepan2.github.io/spectre/) frontend
 + [Heroku](https://www.heroku.com/) hosting
@@ -79,7 +80,7 @@ recipe = """2/3 cup butter
 3 bananas
 1/2 teaspoon salt"""
 
-rc.convert_recipe(recipe, mutliplier=2.0)
+rc.convert_recipe(recipe, multiplier=2.0)
 # 302.7 g butter
 # 396 g sugar
 # 6 bananas
