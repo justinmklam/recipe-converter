@@ -10,5 +10,6 @@ setup(
     packages=find_packages(),
     scripts=[],
     install_requires=["flask", "gunicorn", "recipe-scrapers"],
+    include_package_data=True,
     zip_safe=False,
 )
