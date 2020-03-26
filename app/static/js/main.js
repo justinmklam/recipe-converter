@@ -4,19 +4,19 @@ var App = {
     },
 
     components: {
-        btnConvert: $("#btn-convert"),
-        btnClear: $("#btn-clear"),
-        btnCopy: $("#btn-copy"),
-        btnHelp: $("#btn-help"),
-        btnHelpClose: $(".btn-help-close"),
-        btnReaderView: $("#btn-reader-view"),
-        btnReaderViewClose: $(".btn-reader-view-close"),
-        txtInputRecipe: $("#input-recipe"),
-        txtInputMultiplier: $("#input-multiplier"),
-        txtReaderView: $("#reader-view-content"),
-        txtOutputRecipe: $("#output-recipe"),
-        modalReaderView: $("#reader-view"),
-        modalHelp: $("#modal-help")
+        btnConvert: document.getElementById("btn-convert"),
+        btnClear: document.getElementById("btn-clear"),
+        btnCopy: document.getElementById("btn-copy"),
+        btnHelp: document.getElementById("btn-help"),
+        btnHelpClose: document.querySelectorAll(".btn-help-close"),
+        btnReaderView: document.getElementById("btn-reader-view"),
+        btnReaderViewClose: document.querySelectorAll(".btn-reader-view-close"),
+        txtInputRecipe: document.getElementById("input-recipe"),
+        txtInputMultiplier: document.getElementById("input-multiplier"),
+        txtReaderView: document.getElementById("reader-view-content"),
+        txtOutputRecipe: document.getElementById("output-recipe"),
+        modalReaderView: document.getElementById("reader-view"),
+        modalHelp: document.getElementById("modal-help")
     },
 
     routes: {
@@ -25,54 +25,73 @@ var App = {
     },
 
     bindUI: function() {
-        App.components.btnConvert.on("click", App.onConvertClicked);
-        App.components.btnClear.on("click", App.onClearClicked);
-        App.components.btnCopy.on("click", App.onCopyClicked);
-        App.components.btnHelp.on("click", App.onHelpClicked);
-        App.components.btnHelpClose.on("click", App.onHelpCloseClicked);
-        App.components.btnReaderView.on("click", App.onReaderViewClicked);
-        App.components.btnReaderViewClose.on("click", App.onReaderViewCloseClicked);
+        App.components.btnConvert.addEventListener("click", App.onConvertClicked);
+        App.components.btnClear.addEventListener("click", App.onClearClicked);
+        App.components.btnCopy.addEventListener("click", App.onCopyClicked);
+        App.components.btnHelp.addEventListener("click", App.onHelpClicked);
+        App.components.btnReaderView.addEventListener("click", App.onReaderViewClicked);
+
+        App.components.btnHelpClose.forEach(item => {
+            item.addEventListener("click", App.onHelpCloseClicked)
+        });
+        App.components.btnReaderViewClose.forEach(item => {
+            item.addEventListener("click", App.onReaderViewCloseClicked)
+        });
     },
 
     convertRecipe: function(recipe, multiplier) {
-        return $.post(
+        return fetch(
             App.routes.convert,
-            { "data": recipe, "multiplier": multiplier },
-            function (data) {
-                App.components.txtOutputRecipe.val(data);
+            {
+                headers: {'Content-Type': 'application/json'},
+                method: "POST",
+                body: JSON.stringify({ "data": recipe, "multiplier": multiplier })
             }
-        );
+        )
+        .then( response => response.json() )
+        .then( function(response) {
+                App.components.txtOutputRecipe.value = response["data"];
+        });
     },
 
     appendInstructions: function(instructions) {
-        App.components.txtOutputRecipe.val(function () {
-            return this.value + "\n\n" + instructions;
-        })
+        App.components.txtOutputRecipe.value = App.components.txtOutputRecipe.value.concat(
+            "\n\n", instructions
+        );
     },
 
     onConvertClicked: function() {
-        if (App.components.txtInputRecipe.val().includes("http")) {
-            App.components.btnConvert.prop("disabled", true);
-            App.components.btnClear.prop("disabled", true);
+        if (App.components.txtInputRecipe.value.includes("http")) {
+            App.components.btnConvert.disabled = true;
+            App.components.btnClear.disabled = true;
 
             // Get ingredients from URL, then convert
-            $.post(App.routes.ingredientFromUrl, { "url": App.components.txtInputRecipe.val() },
-                function (data) {
-                    App.components.txtInputRecipe.val(data["ingredients"])
-                    App.convertRecipe(
-                        data["ingredients"], App.components.txtInputMultiplier.val()
-                    ).done(function() {
-                        App.appendInstructions(data["instructions"])
-                    })
-            }).fail(function () {
-                alert("Parsing error: Website not supported for " + App.components.txtInputRecipe.val() + "\n\nPlease manually copy the recipe into the input box.")
-            }).always(function () {
-                App.components.btnConvert.prop("disabled", false);
-                App.components.btnClear.prop("disabled", false);
+            fetch(
+                App.routes.ingredientFromUrl,
+                {
+                    headers: {'Content-Type': 'application/json'},
+                    method: "POST",
+                    body: JSON.stringify({ "url": App.components.txtInputRecipe.value })
+                }
+            )
+            .then( response => response.json() )
+            .then(function (data) {
+                App.components.txtInputRecipe.value = data["ingredients"];
+
+                App.convertRecipe(
+                    data["ingredients"], App.components.txtInputMultiplier.value
+                ).then(function() {
+                    App.appendInstructions(data["instructions"])
+                })
+            }).catch(function () {
+                alert("Parsing error: Website not supported for " + App.components.txtInputRecipe.value + "\n\nPlease manually copy the recipe into the input box.")
+            }).then(function () {
+                App.components.btnConvert.disabled = false;
+                App.components.btnClear.disabled = false;
             })
         }
         else {
-            var split_str = App.components.txtInputRecipe.val().split("\n\n\n")
+            var split_str = App.components.txtInputRecipe.value.split("\n\n\n")
 
             var ingredients = split_str[0]
             var instructions = split_str[1]
@@ -82,38 +101,39 @@ var App = {
 
             // Ingredients entered manually
             App.convertRecipe(
-                ingredients, App.components.txtInputMultiplier.val()
-            ).done(function() {
+                ingredients, App.components.txtInputMultiplier.value
+            )
+            .then(function() {
                 App.appendInstructions(instructions.replace(/\n/g, "\n\n"))
             })
         }
     },
 
     onClearClicked: function() {
-        App.components.txtInputRecipe.val("");
+        App.components.txtInputRecipe.value = "";
         App.components.txtInputRecipe.focus();
     },
 
     onCopyClicked: function() {
-        copyToClipboard(App.components.txtOutputRecipe.val());
+        copyToClipboard(App.components.txtOutputRecipe.value);
         new Toast({ message: 'Output recipe copied to clipboard!', type: 'success' });
     },
 
     onHelpClicked: function() {
-        App.components.modalHelp.addClass("active");
+        App.components.modalHelp.classList.add("active");
     },
 
     onHelpCloseClicked: function() {
-        App.components.modalHelp.removeClass("active");
+        App.components.modalHelp.classList.remove("active");
     },
 
     onReaderViewClicked: function() {
-        App.components.txtReaderView.text(App.components.txtOutputRecipe.val());
-        App.components.modalReaderView.addClass("active")
+        App.components.txtReaderView.innerHTML = App.components.txtOutputRecipe.value;
+        App.components.modalReaderView.classList.add("active")
     },
 
     onReaderViewCloseClicked: function() {
-        App.components.modalReaderView.removeClass("active")
+        App.components.modalReaderView.classList.remove("active")
     },
 }
 
