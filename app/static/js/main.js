@@ -44,33 +44,32 @@ var App = {
         );
     },
 
+    appendInstructions: function(instructions) {
+        App.components.txtOutputRecipe.val(function () {
+            return this.value + "\n\n" + instructions;
+        })
+    },
+
     onConvertClicked: function() {
         if (App.components.txtInputRecipe.val().includes("http")) {
             App.components.btnConvert.prop("disabled", true);
             App.components.btnClear.prop("disabled", true);
 
             // Get ingredients from URL, then convert
-            $.post(
-                App.routes.ingredientFromUrl,
-                { "url": App.components.txtInputRecipe.val() },
+            $.post(App.routes.ingredientFromUrl, { "url": App.components.txtInputRecipe.val() },
                 function (data) {
                     App.components.txtInputRecipe.val(data["ingredients"])
-                    App.convertRecipe(data["ingredients"], App.components.txtInputMultiplier.val())
-                        .done(function () {
-                            // Append instructions below recipe
-                            App.components.txtOutputRecipe.val(function () {
-                                return this.value + "\n\n" + data["instructions"]
-                            })
-                        })
-                }
-            )
-                .fail(function () {
-                    alert("Parsing error: Website not supported for " + App.components.txtInputRecipe.val() + "\n\nPlease manually copy the recipe into the input box.")
-                })
-                .always(function () {
-                    App.components.btnConvert.prop("disabled", false);
-                    App.components.btnClear.prop("disabled", false);
-                })
+                    App.convertRecipe(
+                        data["ingredients"], App.components.txtInputMultiplier.val()
+                    ).done(function() {
+                        App.appendInstructions(data["instructions"])
+                    })
+            }).fail(function () {
+                alert("Parsing error: Website not supported for " + App.components.txtInputRecipe.val() + "\n\nPlease manually copy the recipe into the input box.")
+            }).always(function () {
+                App.components.btnConvert.prop("disabled", false);
+                App.components.btnClear.prop("disabled", false);
+            })
         }
         else {
             var split_str = App.components.txtInputRecipe.val().split("\n\n\n")
@@ -81,15 +80,12 @@ var App = {
             console.debug(ingredients)
             console.debug(instructions)
 
-            // Ingredients entered,
-            App.convertRecipe(ingredients, App.components.txtInputMultiplier.val())
-                .done(function () {
-                    // Append instructions below recipe
-                    App.components.txtOutputRecipe.val(function () {
-                        // Add additional line break for readability
-                        return this.value + "\n\n" + instructions.replace(/\n/g, "\n\n")
-                    })
-                })
+            // Ingredients entered manually
+            App.convertRecipe(
+                ingredients, App.components.txtInputMultiplier.val()
+            ).done(function() {
+                App.appendInstructions(instructions.replace(/\n/g, "\n\n"))
+            })
         }
     },
 
