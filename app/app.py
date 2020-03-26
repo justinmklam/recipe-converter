@@ -14,17 +14,19 @@ def hello():
 
 @app.route("/convert", methods=["POST"])
 def convert():
+    response = request.get_json()
     recipe = rc.RecipeConverter()
 
-    text = request.form["data"]
-    multiplier = float(request.form["multiplier"])
+    text = response["data"]
+    multiplier = float(response["multiplier"])
 
-    return recipe.convert_recipe(text, multiplier)
+    return jsonify({"data": recipe.convert_recipe(text, multiplier)})
 
 
 @app.route("/ingredients_from_url", methods=["POST"])
 def ingredients_from_url():
-    scraper = scrape_me(request.form["url"])
+    response = request.get_json()
+    scraper = scrape_me(response["url"])
 
     return jsonify({
         "ingredients": "\n".join(scraper.ingredients()),
