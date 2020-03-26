@@ -1,8 +1,4 @@
 var App = {
-    init: function() {
-        App.bindUI();
-    },
-
     components: {
         btnConvert: document.getElementById("btn-convert"),
         btnClear: document.getElementById("btn-clear"),
@@ -24,7 +20,11 @@ var App = {
         ingredientFromUrl: "ingredients_from_url"
     },
 
-    bindUI: function() {
+    init: function() {
+        App.addEventListeners();
+    },
+
+    addEventListeners: function() {
         App.components.btnConvert.addEventListener("click", App.onConvertClicked);
         App.components.btnClear.addEventListener("click", App.onClearClicked);
         App.components.btnCopy.addEventListener("click", App.onCopyClicked);
