@@ -76,7 +76,7 @@ var App = {
             )
             .then( response => response.json() )
             .then(function (data) {
-                App.components.txtInputRecipe.value = data["ingredients"];
+                App.components.txtInputRecipe.value = data["ingredients"] + "\n\n\n" + data["instructions"];
 
                 App.convertRecipe(
                     data["ingredients"], App.components.txtInputMultiplier.value
