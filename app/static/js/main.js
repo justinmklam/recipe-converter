@@ -104,7 +104,9 @@ var App = {
                 ingredients, App.components.txtInputMultiplier.value
             )
             .then(function() {
-                App.appendInstructions(instructions.replace(/\n/g, "\n\n"))
+                // Do this double replacement for formatting in case the final output has too many newlines
+                // Happens when instructions already have two newlines in between them
+                App.appendInstructions(instructions.replace(/\n/g, "\n\n").replace(/\n\s*\n/g, '\n\n'))
             })
         }
     },
