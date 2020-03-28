@@ -1,3 +1,5 @@
+"use strict";
+
 var App = {
     components: {
         btnConvert: document.getElementById("btn-convert"),
