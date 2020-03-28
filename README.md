@@ -18,6 +18,8 @@ Web app to convert recipes from imperial volume to metric weight units.
 + Option to load recipe from URL (if website is supported)
 + Reader view for distraction-free viewing (no ads or other fluff!)
 
+Documentation is available on [recipe-converter.readthedocs.io](https://recipe-converter.readthedocs.io/en/latest/recipeconverter.html)
+
 ## Built With
 + [Recipe Scrapers](https://github.com/hhursev/recipe-scrapers) library (thanks [hhursev](https://github.com/hhursev))
 + [Flask](http://flask.pocoo.org/) backend
@@ -63,7 +65,7 @@ make html
 
 ## Usage
 
-Example usage of the module is shown below:
+Example usage of the module is shown below.
 
 ```python
 import recipeconverter
