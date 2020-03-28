@@ -118,7 +118,13 @@ var App = {
 
     onCopyClicked: function() {
         copyToClipboard(App.components.txtOutputRecipe.value);
-        new Toast({ message: 'Output recipe copied to clipboard!', type: 'success' });
+
+        // Change button text for user feedback
+        const originalText = App.components.btnCopy.innerHTML;
+        App.components.btnCopy.innerHTML = "Copied!";
+        setTimeout(function() {
+            App.components.btnCopy.innerHTML = originalText;
+        }, 2000)
     },
 
     onHelpClicked: function() {
