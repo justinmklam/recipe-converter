@@ -6,7 +6,7 @@ setup(
     description="A tool to convert baking ingredients from volume to weight",
     author="Justin Lam",
     author_email="contact@justinmklam.com",
-    url="https://github.com/justinmklam/recipe-converter",
+    url="https://github.com/namtonthat/recipe-converter",
     packages=find_packages(),
     scripts=[],
     install_requires=["flask", "gunicorn", "recipe-scrapers"],
