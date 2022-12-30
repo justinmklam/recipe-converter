@@ -4,8 +4,7 @@
 name: build-and-deploy
 
 env:
-  # FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  FLY_API_TOKEN: rP5uhCEr17vDfSo3rqJFWKrVffcf8nz48jnek2AMYGY
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 on:
   workflow_dispatch:
@@ -49,7 +48,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: 🔨 Build
+      - name: 🔨 Build and push
         run: |
           docker build -t ghcr.io/namtonthat/recipe-converter:latest .
           docker push ghcr.io/namtonthat/recipe-converter:latest
@@ -60,4 +59,4 @@ jobs:
     steps:
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: 🚀 Deploy
-        run: fly launch --image ghcr.io/namtonthat/recipe-converter:latest
+        run: flyctl launch --image ghcr.io/namtonthat/recipe-converter:latest
