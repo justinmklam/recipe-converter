@@ -24,7 +24,7 @@ Documentation is available on [recipe-converter.readthedocs.io](https://recipe-c
 + [Recipe Scrapers](https://github.com/hhursev/recipe-scrapers) library (thanks [hhursev](https://github.com/hhursev))
 + [Flask](http://flask.pocoo.org/) backend
 + [Spectre](https://picturepan2.github.io/spectre/) frontend
-+ [Heroku](https://www.heroku.com/) hosting
++ [fly.io](https://www.fly.io/) hosting
 
 ## Getting Started
 
@@ -95,5 +95,5 @@ rc.convert_recipe_from_url("https://www.allrecipes.com/recipe/20144/banana-banan
 # 113.5 g butter
 # 148.5 g brown sugar
 # 2 eggs, beaten
-# 2.3 cup mashed overripe bananas
+# 2.3 cup mashed overripe banana
 ```
