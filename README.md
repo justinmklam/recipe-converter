@@ -5,7 +5,7 @@
 
 Web app to convert recipes from imperial volume to metric weight units.
 
-**Link to live project:** [recipe-converter-app.herokuapp.com](http://recipe-converter-app.herokuapp.com/)
+**Link to live project:** [recipe-converter.fly.dev](https://recipe-converter.fly.dev)
 
 <p align="center">
 <img src="docs/imgs/recipe-converter.gif">
