@@ -26,18 +26,18 @@ on:
 
 jobs:
   # TODO: add unit tests back in
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-      - name: 🧪 Pytest
-        run: |
-          pip install pytest
-          pytest
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Setup Python 3.8
+  #       uses: actions/setup-python@v1
+  #       with:
+  #         python-version: 3.8
+  #     - name: 🧪 Pytest
+  #       run: |
+  #         pip install pytest
+  #         pytest
 
   build:
     runs-on: ubuntu-latest
