@@ -38,9 +38,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: 🔨 Build
         run: |
-          docker build -t ghcr.io/namtonthat/recipe-converter:latest
+          docker build -t ghcr.io/namtonthat/recipe-converter:latest .
           docker run  ghcr.io/namtonthat/recipe-converter:latest
           docker push ghcr.io/namtonthat/recipe-converter:latest
+        # TODO: add unit tests back in
 
   deploy:
     runs-on: ubuntu-latest
