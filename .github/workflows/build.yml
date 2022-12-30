@@ -55,8 +55,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: 🚀 Deploy
-        run: flyctl launch --image ghcr.io/namtonthat/recipe-converter:latest
+        run: flyctl deploy --image ghcr.io/namtonthat/recipe-converter:latest
