@@ -1,10 +1,11 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: deploy-only
+name: build-and-deploy
 
 env:
-  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  # FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  FLY_API_TOKEN: rP5uhCEr17vDfSo3rqJFWKrVffcf8nz48jnek2AMYGY
 
 on:
   workflow_dispatch:
@@ -22,7 +23,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: 🚀 Deploy
-        run: flyctl deploy --image ghcr.io/namtonthat/recipe-converter:latest
+        run: flyctl launch --image ghcr.io/namtonthat/recipe-converter:latest
