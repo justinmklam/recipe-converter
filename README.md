@@ -36,6 +36,8 @@ Documentation is available on [recipe-converter.readthedocs.io](https://recipe-c
 To install the package:
 
 ```bash
+python3 -m venv env
+source env/bin/activate
 pip install -e .
 ```
 

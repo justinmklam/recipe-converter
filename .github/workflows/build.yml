@@ -35,9 +35,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
       - name: 🧪 Pytest
-        run: |
-          pip install pytest
-          pytest
+        run: pip install pytest pytest-cov coveralls
+
+      - name: 📄 Create Coverage Report
+        run: pytest --cov=recipeconverter
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   build:
     runs-on: ubuntu-latest
