@@ -40,13 +40,13 @@ jobs:
 
       - name: 📄 Create Coverage Report
         run: |
-          pytest --cov=recipeconverter
-          coverage lcov
+          python -m pytest --cov=./recipecovert --cov-report xml
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: coverage.xml
 
   build:
     runs-on: ubuntu-latest
