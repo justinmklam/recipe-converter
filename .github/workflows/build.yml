@@ -40,7 +40,7 @@ jobs:
         run: |
           pip install pytest pytest-cov coveralls
           python -m pytest --cov=recipeconverter
-          coveralls
+          coveralls --service=github
 
       - name: 🔰 Create coveralls badge
         uses: coverallsapp/github-action@master
