@@ -1,10 +1,12 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: build-and-deploy
+name: build
 
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PYTHON_VERSION: 3.8.15
 
 on:
   workflow_dispatch:
@@ -18,23 +20,41 @@ on:
           - info
           - warning
           - debug
-  # push:
-  #   branches: [master]
-  # pull_request:
-  #   branches: [master]
+  push:
+    branches: [master]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-      - name: 🔨 Build
-        run: docker build -t recipe-converter .
+      - name: Setup Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+      - name: 🧪 Run Pytest
+        run: |
+          pip install pytest pytest-cov coveralls
+          python -m pytest --cov=recipeconverter
+      - name: Upload coverage data to coveralls.io
+        run: coveralls --service=github
 
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    needs: test
     steps:
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - name: 🚀 Deploy
-        run: flyctl deploy --remote-only
+      - uses: actions/checkout@v3
+      - name: Login Github Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🔨 Build and push
+        run: |
+          docker build -t ghcr.io/namtonthat/recipe-converter:latest .
+          docker push ghcr.io/namtonthat/recipe-converter:latest

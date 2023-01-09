@@ -1,7 +1,10 @@
 # Metric Recipe Converter
-
-![Python application](https://github.com/justinmklam/recipe-converter/workflows/build) [![Build Status](https://travis-ci.org/justinmklam/recipe-converter.svg?branch=master)](https://travis-ci.org/justinmklam/recipe-converter) [![Coverage Status](https://coveralls.io/repos/github/justinmklam/recipe-converter/badge.svg?branch=master)](https://coveralls.io/github/justinmklam/recipe-converter?branch=master) [![Documentation Status](https://readthedocs.org/projects/recipe-converter/badge/?version=latest)](https://recipe-converter.readthedocs.io/en/latest/?badge=latest) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
+# Badges
+[![Build](https://github.com/namtonthat/recipe-converter/actions/workflows/build.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/build.yml)
+[![Deploy](https://github.com/namtonthat/recipe-converter/actions/workflows/deploy.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/deploy.yml)
+[![Coverage Status](https://coveralls.io/repos/github/namtonthat/recipe-converter/badge.svg?branch=master)](https://coveralls.io/github/namtonthat/recipe-converter?branch=master)
+[![Documentation Status](https://readthedocs.org/projects/recipe-converter/badge/?version=latest)](https://recipe-converter.readthedocs.io/en/latest/?badge=latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Web app to convert recipes from imperial volume to metric weight units.
 
@@ -33,6 +36,8 @@ Documentation is available on [recipe-converter.readthedocs.io](https://recipe-c
 To install the package:
 
 ```bash
+python3 -m venv env
+source env/bin/activate
 pip install -e .
 ```
 
