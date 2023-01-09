@@ -1,7 +1,7 @@
 # Metric Recipe Converter
 # Badges
 [![Build](https://github.com/namtonthat/recipe-converter/actions/workflows/build.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/build.yml)
-[![Deploy](https://github.com/namtonthat/recipe-converter/actions/workflows/deploy.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/deploy.yml)
+[![Deploy](https://github.com/namtonthat/recipe-converter/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/deploy.yml)
 [![Coverage Status](https://coveralls.io/repos/github/namtonthat/recipe-converter/badge.svg?branch=master)](https://coveralls.io/github/namtonthat/recipe-converter?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/recipe-converter/badge/?version=latest)](https://recipe-converter.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
