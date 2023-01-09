@@ -5,6 +5,7 @@ name: build
 
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  PYTHON_VERSION: 3.8.15
 
 on:
   workflow_dispatch:
@@ -26,19 +27,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Python 3.8
+      - name: Setup Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e .
+          python -m pip install -e .
       - name: 🧪 Pytest
         run: pip install pytest pytest-cov coveralls
 
       - name: 📄 Create Coverage Report
-        run: pytest --cov=recipeconverter
+        run: |
+          pytest --cov=recipeconverter
+          coverage lcov
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
