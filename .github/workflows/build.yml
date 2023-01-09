@@ -35,14 +35,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e .
-      - name: 🧪 Pytest
-        run: pip install pytest pytest-cov coveralls
-
-      - name: 📄 Create Coverage Report
+      - name: 🧪 Run Pytest
         run: |
-          python -m pytest --cov=./recipecovert --cov-report xml
+          pip install pytest pytest-cov coveralls
+          python -m pytest --cov=recipeconverter
+          coveralls
 
-      - name: Coveralls
+      - name: 🔰 Create coveralls badge
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
