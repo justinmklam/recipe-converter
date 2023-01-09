@@ -28,10 +28,7 @@ def ingredients_from_url():
     response = request.get_json()
     scraper = scrape_me(response["url"])
 
-    return jsonify({
-        "ingredients": "\n".join(scraper.ingredients()),
-        "instructions": scraper.instructions().replace("\n", "\n\n")
-    })
+    return jsonify({"ingredients": "\n".join(scraper.ingredients()), "instructions": scraper.instructions().replace("\n", "\n\n")})
 
 
 if __name__ == "__main__":
