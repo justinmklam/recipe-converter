@@ -8,7 +8,7 @@
 
 Web app to convert recipes from imperial volume to metric weight units.
 
-**Link to live project:** [recipe-converter.fly.dev](https://recipe-converter.fly.dev)
+**Live Project:** [recipe-converter.fly.dev](https://recipe-converter.fly.dev)
 
 <p align="center">
 <img src="docs/imgs/recipe-converter.gif">
@@ -49,7 +49,17 @@ flask run
 ```
 
 ### For Developers
+#### Github Actions
+```mermaid
+graph TD
+    A[New PR] --> B{merge into <br> master}
+    B --> |no| C(use <br><code>for-debug.yml</code>)
+    B --> |yes| D(<code>on-push.yml</code> <br> triggered  automatically)
+    C --> E
+    D --> E(changes reflected in <br> <code>recipe-convertor.fly.io</code>)
+```
 
+#### Local Development
 To install dependencies:
 
 ```bash
