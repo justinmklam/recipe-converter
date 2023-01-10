@@ -60,7 +60,7 @@ flask run
 graph TD
     A(New PR) --> B(merge into master branch)
     B --> C(build-and-deploy.yml triggered)
-    C --> D(changes reflected <br><a href="https://recipe-converter.fly.dev/")>https://recipe-converter.fly.dev/</a>)
+    C --> D(changes reflected <br><a href="https://recipe-converter.fly.dev/">https://recipe-converter.fly.dev/</a>)
 ```
 
 #### Local Development
