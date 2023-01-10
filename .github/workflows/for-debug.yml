@@ -37,14 +37,18 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "poetry"
 
+      - name: Build and install `recipe_converters`
+        run: |
+          poetry build
+          poetry env use ${{ env.PYTHON_VERSION }}
+          poetry install
+
       #----------------------------------------------
       # install dependencies if cache does not exist
       #----------------------------------------------
-      - name: install dependencies
+      - name: Install additional dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          poetry env use ${{ env.PYTHON_VERSION }}
-          poetry build
           poetry install --no-interaction --no-root
 
       - name: 🧪 Run Pytest

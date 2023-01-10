@@ -8,9 +8,9 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PYTHON_VERSION: 3.8.15
 
-on:
-  push:
-    branches: [master]
+# on:
+#   push:
+#     branches: [master]
 
 jobs:
   test:
