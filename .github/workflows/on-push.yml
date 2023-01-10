@@ -9,15 +9,27 @@ env:
   PYTHON_VERSION: 3.8.15
 
 on:
-  push:
-    branches: [master]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Log level"
+        required: true
+        default: "warning"
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+# on:
+#   push:
+#     branches: [master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3.0.0
 
       - name: Install poetry 📚
         run: pipx install poetry
@@ -39,7 +51,7 @@ jobs:
           poetry run pytest --cov=recipeconverter
 
       - name: 📶 Upload coverage data to coveralls.io
-        run: coveralls --service=github
+        run: poetry run coveralls --service=github
 
       - name: 📜 Build readthedocs
         uses: ammaraskar/sphinx-action@master
