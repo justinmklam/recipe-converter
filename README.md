@@ -58,9 +58,9 @@ flask run
 #### Github Actions
 ```mermaid
 graph TD
-    A[New PR] --> B(merge into <br> <code>master</code>)
-    B --> C(<code>on-push.yml</code> <br> triggered automatically)
-    C --> D(changes reflected in <br> <code>recipe-convertor.fly.io</code>)
+    A(New PR) --> B(merge into master branch)
+    B --> C(build-and-deploy.yml triggered)
+    C --> D(changes reflected <br><a href="https://recipe-converter.fly.dev/")>https://recipe-converter.fly.dev/</a>)
 ```
 
 #### Local Development
