@@ -48,7 +48,7 @@ jobs:
           poetry run pytest --cov=recipeconverter
 
       - name: 📶 Upload coverage data to coveralls.io
-        run: coveralls --service=github
+        run: poetry run coveralls --service=github
 
       - name: 📜 Build readthedocs
         uses: ammaraskar/sphinx-action@master
