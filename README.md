@@ -31,13 +31,20 @@ Documentation is available on [recipe-converter.readthedocs.io](https://recipe-c
 ## Getting Started
 
 ### General
-
-To install the package:
+Setup python environment (requires `poetry` and `pyenv` to manage python versions):
 
 ```bash
-python3 -m venv env
-source env/bin/activate
-pip install -e .
+brew install poetry pyenv
+pyenv install 3.8.15
+pyenv local 3.8.15
+poetry env use $(pyenv which python)
+poetry shell
+```
+
+To install the package:
+```bash
+poetry build
+poetry install --no-dev
 ```
 
 To run the web app:
@@ -62,7 +69,7 @@ graph TD
 To install dependencies:
 
 ```bash
-pip install -r requirements-dev.txt
+poetry install
 pip install -r docs/requirements.txt
 ```
 
