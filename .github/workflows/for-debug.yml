@@ -45,6 +45,7 @@ jobs:
         run: |
           poetry env use ${{ env.PYTHON_VERSION }}
           poetry install --no-interaction --no-root
+          poetry build
 
       - name: 🧪 Run Pytest
         run: |
