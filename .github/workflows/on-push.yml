@@ -8,29 +8,42 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PYTHON_VERSION: 3.8.15
 
-# on:
-#   push:
-#     branches: [master]
+on:
+  push:
+    branches: [master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Python ${{ env.PYTHON_VERSION }}
+      - name: Checkout 🛎
+        uses: actions/checkout@v3.3.0
+
+      - name: Install poetry 📚
+        run: pipx install poetry
+
+      - name: Set up Python 3.8 🐍
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - name: Install dependencies
+          cache: "poetry"
+
+      - name: Build and install `recipe_converters`
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -e .
+          poetry build
+          poetry env use ${{ env.PYTHON_VERSION }}
+          poetry install
+
       - name: 🧪 Run Pytest
         run: |
-          pip install pytest pytest-cov coveralls
-          python -m pytest --cov=recipeconverter
-      - name: 📶 Upload coverage data to coveralls.io
-        run: coveralls --service=github
+          poetry run pytest --cov=recipeconverter
+
+      # - name: 📶 Upload coverage data to coveralls.io
+      #   run: coveralls --service=github
+      - name: 📜 Build readthedocs
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: "docs/"
 
   build:
     runs-on: ubuntu-latest

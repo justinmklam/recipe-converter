@@ -1,7 +1,6 @@
 # Metric Recipe Converter
 # Badges
-[![Build](https://github.com/namtonthat/recipe-converter/actions/workflows/build.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/build.yml)
-[![Deploy](https://github.com/namtonthat/recipe-converter/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/deploy.yml)
+[![.github/workflows/on-push.yml](https://github.com/namtonthat/recipe-converter/actions/workflows/on-push.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/on-push.yml)
 [![Coverage Status](https://coveralls.io/repos/github/namtonthat/recipe-converter/badge.svg?branch=master)](https://coveralls.io/github/namtonthat/recipe-converter?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/recipe-converter/badge/?version=latest)](https://recipe-converter.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -50,7 +49,7 @@ flask run
 
 ### For Developers
 #### Github Actions
-```mermaid
+```{mermaid}
 graph TD
     A[New PR] --> B{merge into <br> master}
     B --> |no| C(use <br><code>for-debug.yml</code>)
