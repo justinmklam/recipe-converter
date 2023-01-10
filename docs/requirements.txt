@@ -1,5 +1,4 @@
 sphinx
-recommonmark
 sphinx_rtd_theme
 sphinxcontrib-mermaid
 myst_parser
