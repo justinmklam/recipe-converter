@@ -43,14 +43,6 @@ jobs:
           poetry env use ${{ env.PYTHON_VERSION }}
           poetry install
 
-      #----------------------------------------------
-      # install dependencies if cache does not exist
-      #----------------------------------------------
-      - name: Install additional dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: |
-          poetry install --no-interaction --no-root
-
       - name: 🧪 Run Pytest
         run: |
           poetry run pytest --cov=recipeconverter
@@ -58,9 +50,9 @@ jobs:
       # - name: 📶 Upload coverage data to coveralls.io
       #   run: coveralls --service=github
       - name: 📜 Build readthedocs
-        run: |
-          cd docs
-          make html
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: "docs/"
 
   build:
     runs-on: ubuntu-latest
