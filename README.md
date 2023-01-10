@@ -56,7 +56,7 @@ flask run
 
 ### For Developers
 #### Github Actions
-```{mermaid}
+```mermaid
 graph TD
     A[New PR] --> B{merge into <br> master}
     B --> |no| C(use <br><code>for-debug.yml</code>)
