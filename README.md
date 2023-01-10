@@ -1,6 +1,6 @@
 # Metric Recipe Converter
 # Badges
-[![.github/workflows/on-push.yml](https://github.com/namtonthat/recipe-converter/actions/workflows/on-push.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/on-push.yml)
+[![.github/workflows/build-and-deploy.yml](https://github.com/namtonthat/recipe-converter/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/namtonthat/recipe-converter/actions/workflows/build-and-deploy.yml)
 [![Coverage Status](https://coveralls.io/repos/github/namtonthat/recipe-converter/badge.svg?branch=master)](https://coveralls.io/github/namtonthat/recipe-converter?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/recipe-converter/badge/?version=latest)](https://recipe-converter.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
