@@ -1,6 +1,7 @@
 **/__pycache/
 *.pyc
 *.egg-info/
+dist/*
 **/.ipynb_checkpoints/
 *.coverage
 
