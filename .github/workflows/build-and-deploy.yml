@@ -1,28 +1,28 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: on-push
+name: build-and-deploy
 
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PYTHON_VERSION: 3.8.15
 
-on:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: "Log level"
-        required: true
-        default: "warning"
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
 # on:
-#   push:
-#     branches: [master]
+#   workflow_dispatch:
+#     inputs:
+#       logLevel:
+#         description: "Log level"
+#         required: true
+#         default: "warning"
+#         type: choice
+#         options:
+#           - info
+#           - warning
+#           - debug
+on:
+  push:
+    branches: [master]
 
 jobs:
   test:
